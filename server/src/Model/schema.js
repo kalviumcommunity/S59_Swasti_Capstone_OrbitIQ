@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 
 const Schema= new mongoose.Schema({
-    title: String,
+    title: { type: String, required: true, maxlength: 100 },
     description: String,
 });
 

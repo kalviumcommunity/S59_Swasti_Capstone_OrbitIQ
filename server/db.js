@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const connectToDB = async () => {
   try {
-    await mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASS}@server.clkkhel.mongodb.net/EduData?retryWrites=true&w=majority&appName=Server`, {
+    await mongoose.connect(process.env.URI, {
     });
     console.log('📦 connected to mongoDB');
   } catch (err) {
