@@ -1,0 +1,14 @@
+meta {
+  name: POST-API
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/add
+  body: {
+    "title": "Sample Title",
+    "description": "Sample Description"
+  }
+  auth: none
+}
