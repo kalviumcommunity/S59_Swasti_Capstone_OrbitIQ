@@ -36,5 +36,24 @@ router.post("/add",async(req,res)=>{
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const { error } = ValidateSchema(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+    
+    const data = await Schema.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!data) {
+      return res.status(404).send("Data not found");
+    }
+    res.json(data);
+  } catch (err) {
+    res.status(500).send("Server error while updating data: " + err.message);
+  }
+});
+
 
 module.exports = router;
