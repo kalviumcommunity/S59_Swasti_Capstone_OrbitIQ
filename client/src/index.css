@@ -4,10 +4,11 @@
   font-family: "Akshar",Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --primary-color: #000137;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #000137;
+  background-color: var(--primary-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
