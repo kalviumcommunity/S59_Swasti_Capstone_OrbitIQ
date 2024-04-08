@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+.parent {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+.sub-div-one {
+  background-color: #000137;
+  min-width: 55%;
+}
+.sub-div-two {
+  min-width: 45%;
+}
+.sub-div-two video {
+  position: absolute;
+  width: 45%;
+  height: 100%;
+  object-fit: cover;
+}
+.text-div-parent {
+  display: flex;
+  flex-direction: column;
+  padding: 49px;
+  margin-top: 8vw;
+  gap: 10px;
+}
+.logo-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 0%;
+}
+.web-name {
+  font-size: 75px;
+  margin: 0;
+}
+.logo-icon {
+  height: 150px;
+  margin: 0;
+}
+.description {
+  font-size: 45px;
+  font-weight: light;
+  font-family: "Inter";
+  margin: 0 0 4vw 0;
+}
+.launch-btn {
+  height: auto;
+  width: fit-content;
+  font-size: 24px;
+  background-color: rgba(0, 1, 55, 0);
+  border: 2px solid #6ffac9;
+  border-radius: 6px;
+  padding: 13px 26px 13px 26px;
+  cursor: pointer;
+  &:hover {
+    background-color: #6ffac9;
+    font-weight: bold;
+    color: #000137;
+    border: 3px solid white;
+  }
+}
+
+.nav-top {
+  position: relative;
+  display: flex;
+  gap: 3vw;
+  font-family: "Inter";
+  font-size: 20px;
+  justify-content: end;
+  padding: 0.1vw 4vw 0vw 0vw;
+}
+.nav-top p {
+  cursor: pointer;
+  padding: 0.5vw;
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 6px;
+  &:hover {
+    border: 2px solid white;
+  }
+}
+.parent-div-text {
+  display: flex;
+  min-height: 30vh;
+  align-items: end;
+}
+.text-over-subparent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10vw;
+}
+.Down-btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+@keyframes upAndDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.Down-btn img {
+  cursor: pointer;
+  &:hover {
+    height: 3vw;
+  }
+}
+.animated-up-down {
+  animation: upAndDown 2s ease-in-out infinite;
+}
+.text-over-vid {
+  position: relative;
+  font-family: "Sacramento";
+  font-size: 4vw;
+}
+
