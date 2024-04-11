@@ -1,7 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "../css/Signup.css";
-import { Button, TextField, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
@@ -24,10 +26,6 @@ function SignUp() {
     setRegisteredData(data);
     console.log(data);
   };
-
-  useEffect(() => {
-    console.log(registeredData);
-  }, [registeredData]);
 
   return (
     <>
@@ -52,9 +50,15 @@ function SignUp() {
                   },
                 }}
                 {...register("name", {
-                  required: true,
-                  minLength: 3,
-                  maxLength: 30,
+                  required: "Username is required",
+                  minLength: {
+                    value: 3,
+                    message: "Username must be at least 3 characters",
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: "Username cannot exceed 30 characters",
+                  },
                 })}
               />
               {errors.name && (
