@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../css/Landing.css";
 import VideoLink from "../assets/space_landing_vid.mp4";
 import LogoIcon from "../assets/Logo-icon.png";
@@ -17,7 +18,11 @@ export default function Landing() {
             <p className="description">
               "Journey to the Stars: Unveiling the Mysteries of Outer Space"
             </p>
-            <button className="launch-btn" aria-label="Launch into Learning">Launch into Learning</button>
+            <Link to="signup">
+              <button className="launch-btn" aria-label="Launch into Learning">
+                Launch into Learning
+              </button>
+            </Link>
           </div>
         </div>
         <div className="sub-div-two">
@@ -25,7 +30,16 @@ export default function Landing() {
             <source src={VideoLink} type="video/mp4" />
           </video>
           <div className="nav-top">
-            <p>SIGN UP</p>
+            <Link
+              to="/signup"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                fontWeight: "normal",
+              }}
+            >
+              <p>SIGN UP</p>
+            </Link>
             <p>SIGN IN</p>
           </div>
           <div className="parent-div-text"></div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Route,Routes } from 'react-router-dom'
 import Loader from "./components/Loader";
 import Landing from "./pages/Landing";
+import SignUp from "./pages/SignUp";
 import "./App.css";
 
 const App = () => {
@@ -12,7 +14,12 @@ const App = () => {
     }, 2000);
   }, []);
 
-  return <>{loading ? <Loader /> : <Landing />}</>;
+  return (<>
+  <Routes>
+    <Route path="/" element={loading ? <Loader /> : <Landing />}/>
+    <Route path="/signup" element={<SignUp/>}/>
+  </Routes>
+  </>);
 };
 
 export default App;
