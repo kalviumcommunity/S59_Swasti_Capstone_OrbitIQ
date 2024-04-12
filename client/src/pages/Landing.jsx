@@ -40,7 +40,16 @@ export default function Landing() {
             >
               <p>SIGN UP</p>
             </Link>
-            <p>SIGN IN</p>
+            <Link
+              to="/login"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                fontWeight: "normal",
+              }}
+            >
+              <p>SIGN IN</p>
+            </Link>
           </div>
           <div className="parent-div-text"></div>
           <div className="text-over-subparent">
