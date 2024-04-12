@@ -24,7 +24,6 @@ function Login() {
 
   const onSubmit = async (data) => {
     setRegisteredData(data);
-    console.log(data);
   };
 
   return (
@@ -52,12 +51,12 @@ function Login() {
                 }}
                 {...register("email", {
                   required: true,
-                  pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
                 })}
               />
               {errors.email && (
                 <div className="error">
-                  <img src={ErrorImage} alt="error" />
+                  <img src={ErrorImage} alt="Error message: Please check your credentials" />
                   <p>{errors.email.message}</p>
                 </div>
               )}
@@ -83,7 +82,7 @@ function Login() {
               />
               {errors.password && (
                 <div className="error">
-                  <img src={ErrorImage} alt="error" />
+                  <img src={ErrorImage} alt="Error message: Please check your credentials" />
                   <p>{errors.password.message}</p>
                 </div>
               )}
