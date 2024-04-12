@@ -13,7 +13,7 @@ import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
 import { Link } from "react-router-dom";
 
-function SignUp() {
+function Login() {
   const {
     register,
     handleSubmit,
@@ -33,41 +33,9 @@ function SignUp() {
         <div className="sub-div-one-sign">
           <form onSubmit={handleSubmit(onSubmit)} className="form-signUp">
             <Typography variant="h3" align="center" gutterBottom>
-              Sign Up
+              Sign In
             </Typography>
-            <div className="input-container">
-              <PersonIcon className="icon" />
-              <TextField
-                label="Username"
-                variant="outlined"
-                fullWidth
-                InputLabelProps={{ style: { color: "white" } }}
-                InputProps={{
-                  style: {
-                    borderBottom: "1px solid white",
-                    color: "white",
-                    borderRadius: 0,
-                  },
-                }}
-                {...register("name", {
-                  required: "Username is required",
-                  minLength: {
-                    value: 3,
-                    message: "Username must be at least 3 characters",
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: "Username cannot exceed 30 characters",
-                  },
-                })}
-              />
-              {errors.name && (
-                <div className="error">
-                  <img src={ErrorImage} alt="error" />
-                  <p>{errors.name.message}</p>
-                </div>
-              )}
-            </div>
+
             <div className="input-container">
               <EmailIcon className="icon" />
               <TextField
@@ -120,33 +88,7 @@ function SignUp() {
                 </div>
               )}
             </div>
-            <div className="input-container">
-              <LockIcon className="icon" />
-              <TextField
-                label="Confirm Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                InputLabelProps={{ style: { color: "white" } }}
-                InputProps={{
-                  style: {
-                    borderBottom: "1px solid white",
-                    color: "white",
-                    borderRadius: 0,
-                  },
-                }}
-                {...register("confirmpassword", {
-                  required: true,
-                  validate: (value) => value === watch("password"),
-                })}
-              />
-              {errors.confirmpassword && (
-                <div className="error">
-                  <img src={ErrorImage} alt="error" />
-                  <p>{errors.confirmpassword.message}</p>
-                </div>
-              )}
-            </div>
+
             <div className="sign-up-btn">
               <Button
                 type="submit"
@@ -159,10 +101,10 @@ function SignUp() {
                   fontSize: "18px",
                 }}
               >
-                SIGN UP
+                SIGN IN
               </Button>
-              <Link to="/login">
-                <p className="login">or I’m already a member</p>
+              <Link to="/signup">
+                <p className="login">or Not a member? Register now</p>
               </Link>
             </div>
           </form>
@@ -187,4 +129,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Login;
