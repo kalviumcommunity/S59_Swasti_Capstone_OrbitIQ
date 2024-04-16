@@ -4,6 +4,7 @@ import "../css/Landing.css";
 import VideoLink from "../assets/space_landing_vid.mp4";
 import LogoIcon from "../assets/Logo-icon.png";
 import DownButton from "../assets/down-btn.png";
+import About from "../components/About.jsx";
 
 export default function Landing() {
   return (
@@ -18,7 +19,12 @@ export default function Landing() {
             <p className="description">
               "Journey to the Stars: Unveiling the Mysteries of Outer Space"
             </p>
-            <Link to="signup">
+            <Link
+              to="signup"
+              style={{
+                width: "fit-content",
+              }}
+            >
               <button className="launch-btn" aria-label="Launch into Learning">
                 Launch into Learning
               </button>
@@ -60,6 +66,7 @@ export default function Landing() {
           </div>
         </div>
       </div>
+      <About />
     </>
   );
 }
