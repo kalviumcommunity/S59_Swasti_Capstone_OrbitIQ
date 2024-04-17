@@ -10,6 +10,7 @@
   --font-size-description: 45px;
   --font-size-button: 24px;
 }
+
 .parent {
   display: flex;
   flex-direction: row;

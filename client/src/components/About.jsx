@@ -47,7 +47,7 @@ export default function About() {
 
         <Parallax strength={800} bgImage={Astro}>
           <div className="get-started-box">
-            <img src={PlanetIcon} alt="Pl-icon" />
+            <img src={PlanetIcon} alt="planet" />
             <div>
               <p className="p-1">GET STARTED NOW</p>
               <p className="p-2">

@@ -15,7 +15,6 @@
 }
 .about-text {
   margin: 0;
-  font-size: 1vw;
   text-align: center;
   width: 900px;
   line-height: 1.6vw;
@@ -61,11 +60,7 @@
   align-items: center;
   justify-content: center;
   background: rgb(0, 2, 111);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 2, 111, 1) 0%,
-    rgba(0, 1, 55, 1) 33%
-  );
+  background: linear-gradient(0deg, #00026f 0%, #000137 33%);
 }
 .what-div p {
   font-size: 3vw;
@@ -88,16 +83,18 @@
   gap: 30px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 4vw;
+  /* margin-bottom: 4vw; */
 }
 .footer img {
   height: 5vw;
   margin-top: 3vw;
+  margin-bottom: 20px;
 }
 .footer-comp p {
   font-size: 3vw;
   letter-spacing: 2px;
   text-align: center;
+  margin: 0;
 }
 .footer-comp .connect {
   font-size: 2vw;
