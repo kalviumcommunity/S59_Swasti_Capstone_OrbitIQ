@@ -10,6 +10,7 @@
   --font-size-description: 45px;
   --font-size-button: 24px;
 }
+
 .parent {
   display: flex;
   flex-direction: row;
@@ -17,7 +18,12 @@
 }
 
 .sub-div-one {
-  background-color: var(--primary-color);
+  background: rgb(0, 2, 111);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 2, 111, 1) 0%,
+    rgba(0, 1, 55, 1) 33%
+  );
   min-width: 55%;
 }
 
@@ -75,11 +81,11 @@
   padding: 13px 26px 13px 26px;
   cursor: pointer;
   &:hover {
-  background-color: var(--secondary-color);
-  font-weight: bold;
-  color: var(--primary-color);
-  border: 3px solid white;
-}
+    background-color: var(--secondary-color);
+    font-weight: bold;
+    color: var(--primary-color);
+    border: 3px solid white;
+  }
 }
 
 .nav-top {
@@ -152,4 +158,3 @@
   font-family: var(--font-sacramento);
   font-size: 4vw;
 }
-
