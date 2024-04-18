@@ -162,3 +162,11 @@
 .text-div-parent {
   text-align: left;
 }
+
+.parent {
+  transition: opacity 2.3s ease-in-out;
+}
+
+.fade-out {
+  opacity: -1;
+}

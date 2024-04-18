@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Landing.css";
 import VideoLink from "../assets/space_landing_vid.mp4";
@@ -7,9 +7,28 @@ import DownButton from "../assets/down-btn.png";
 import About from "../components/About.jsx";
 
 export default function Landing() {
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold = 400; 
+      if (window.scrollY > threshold) {
+        setFadeOut(true);
+      } else {
+        setFadeOut(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <div className="parent">
+      <div className={`parent ${fadeOut ? "fade-out" : ""}`}>
         <div className="sub-div-one">
           <div className="text-div-parent">
             <div className="logo-div">

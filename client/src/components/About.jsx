@@ -8,14 +8,13 @@ import PlanetIcon from "../assets/planetIcon.png";
 import { Parallax } from "react-parallax";
 import TextBox from "./TextBox";
 import Footer from "./Footer";
-import Fade from "react-reveal/Fade"
 
 import "../css/About.css";
 
 export default function About() {
   return (
     <>
-     <Fade bottom distance="10%" duration={900}>
+     
       <div className="text-box">
         <p className="text-align-center">| About OrbitIQ</p>
         <p className="about-text">
@@ -85,7 +84,6 @@ export default function About() {
           <Footer />
         </Parallax>
       </div>
-      </Fade>
     </>
   );
 }
