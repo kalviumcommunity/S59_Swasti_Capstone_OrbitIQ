@@ -14,7 +14,6 @@ import "../css/About.css";
 export default function About() {
   return (
     <>
-     
       <div className="text-box">
         <p className="text-align-center">| About OrbitIQ</p>
         <p className="about-text">
