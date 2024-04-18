@@ -8,11 +8,14 @@ import PlanetIcon from "../assets/planetIcon.png";
 import { Parallax } from "react-parallax";
 import TextBox from "./TextBox";
 import Footer from "./Footer";
+import Fade from "react-reveal/Fade"
+
 import "../css/About.css";
 
 export default function About() {
   return (
     <>
+     <Fade bottom distance="10%" duration={900}>
       <div className="text-box">
         <p className="text-align-center">| About OrbitIQ</p>
         <p className="about-text">
@@ -25,23 +28,45 @@ export default function About() {
           where every interaction deepens your understanding of the universe.
         </p>
       </div>
+      
       <div className="text-box">
         <p className="text-align-center">| About World</p>
         <div className="card-div">
           <div className="small-div div1">
-            <img src={Planet} alt="imag1" />
+            <img src={Planet} alt="imag1" className="image"/>
+            <div className="overlay">
+            <h2>Planets</h2>
+            <p>Explore the wonders of our solar system</p>
+            </div>
+            
           </div>
           <div className="small-div div2">
             <img src={Telescope} alt="imag1" />
+            <div className="overlay">
+            <h2>Telescope</h2>
+            <p>Unveiling the secrets of the universe</p>
+            </div>
           </div>
           <div className="small-div div3">
             <img src={Image2} alt="imag1" />
+            <div className="overlay">
+            <h2>Earth</h2>
+            <p>Our beautiful home, seen from space</p>
+            </div>
           </div>
           <div className="small-div div4">
             <img src={Astro} alt="imag1" />
+            <div className="overlay">
+            <h2>Astronaut</h2>
+            <p>Journeying beyond the bounds of Earth</p>
+            </div>
           </div>
           <div className="small-div div5">
             <img src={Neptune} alt="imag1" />
+            <div className="overlay">
+            <h2>Neptune</h2>
+            <p>Dive into the mysteries of distant worlds</p>
+            </div>
           </div>
         </div>
 
@@ -60,6 +85,7 @@ export default function About() {
           <Footer />
         </Parallax>
       </div>
+      </Fade>
     </>
   );
 }
