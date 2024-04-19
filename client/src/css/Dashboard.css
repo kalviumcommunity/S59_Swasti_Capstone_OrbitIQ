@@ -1,0 +1,9 @@
+.logout{
+    height: 80px;
+    width: fit-content;
+    background-color: #000137;
+    cursor: pointer;
+}
+.logout img{
+    height: 70px;
+}

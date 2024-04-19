@@ -1,5 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/Signup.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,7 +16,10 @@ import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
 import { Link } from "react-router-dom";
 
+const API_URI= `${import.meta.env.VITE_API_URI}/user/signup`
+
 function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,6 +31,28 @@ function SignUp() {
   const onSubmit = async (data) => {
     setRegisteredData(data);
     console.log(data);
+    try {
+      const response = await fetch(API_URI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({Username:data.name,Email:data.email,Password:data.password}),
+      });
+      if (response.ok) {
+        console.log("Registered successful");
+        toast.success("Registration Successful !")
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+      } else {
+        console.error("Registration failed");
+        toast.error("User Already registered")
+
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   return (
@@ -183,6 +211,7 @@ function SignUp() {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }
