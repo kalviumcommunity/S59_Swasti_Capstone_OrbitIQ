@@ -16,11 +16,11 @@ import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
 import { Link } from "react-router-dom";
 
-const API_URI= `${import.meta.env.VITE_API_URI}/user/login`
+const API_URI = `${import.meta.env.VITE_API_URI}/user/login`;
 
 function Login() {
   const navigate = useNavigate();
- 
+
   const {
     register,
     handleSubmit,
@@ -37,14 +37,15 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({Email:data.email,Password:data.password}),
+        body: JSON.stringify({ Email: data.email, Password: data.password }),
       });
 
       if (response.ok) {
-        const {message,Username}=await response.json();
-        toast.success('Authentication successful');
+        const Email = data.email;
+        const { message, Username } = await response.json();
+        toast.success("Authentication successful");
         setTimeout(() => {
-          navigate("/dashboard",{state:{Username}});
+          navigate("/dashboard", { state: { Username, Email } });
         }, 3000);
       } else {
         console.error("Login failed");
@@ -84,7 +85,10 @@ function Login() {
               />
               {errors.email && (
                 <div className="error">
-                  <img src={ErrorImage} alt="Error message: Please check your credentials" />
+                  <img
+                    src={ErrorImage}
+                    alt="Error message: Please check your credentials"
+                  />
                   <p>{errors.email.message}</p>
                 </div>
               )}
@@ -110,7 +114,10 @@ function Login() {
               />
               {errors.password && (
                 <div className="error">
-                  <img src={ErrorImage} alt="Error message: Please check your credentials" />
+                  <img
+                    src={ErrorImage}
+                    alt="Error message: Please check your credentials"
+                  />
                   <p>{errors.password.message}</p>
                 </div>
               )}
@@ -152,7 +159,7 @@ function Login() {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
