@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/Signup.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -13,7 +16,11 @@ import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
 import { Link } from "react-router-dom";
 
+const API_URI= `${import.meta.env.VITE_API_URI}/user/login`
+
 function Login() {
+  const navigate = useNavigate();
+ 
   const {
     register,
     handleSubmit,
@@ -24,6 +31,27 @@ function Login() {
 
   const onSubmit = async (data) => {
     setRegisteredData(data);
+    try {
+      const response = await fetch(API_URI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({Email:data.email,Password:data.password}),
+      });
+
+      if (response.ok) {
+        const {message,Username}=await response.json();
+        toast.success('Authentication successful');
+        setTimeout(() => {
+          navigate("/dashboard",{state:{Username}});
+        }, 3000);
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -124,6 +152,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }
