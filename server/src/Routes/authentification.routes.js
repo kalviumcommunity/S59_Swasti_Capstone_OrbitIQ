@@ -2,6 +2,8 @@ const express=require("express");
 const router =express.Router();
 const User=require("../Model/user_schema");
 
+const {ValidateUserSchema}=require("../Model/joi_schema")
+
 router.get("/",async(req,res)=>{
     try{
         const user =await User.find();
@@ -32,6 +34,10 @@ router.post("/logout", (req, res) => {
 router.post("/signup", async (req, res) => {
     const { Username,Email, Password } = req.body;
     try {
+      const {error}=ValidateUserSchema(req.body)
+    if(error){
+      return res.status(400).json({ error: error.details[0].message });
+    } 
       const exist = await User.findOne({ Email });
       if (exist) {
         res.status(400).json({ message: "User already registered" });
