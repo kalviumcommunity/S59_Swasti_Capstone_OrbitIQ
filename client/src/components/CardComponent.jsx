@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import "../css/Card.css"
 
 function CardComponent({ imgURL, text }) {
@@ -9,5 +10,10 @@ function CardComponent({ imgURL, text }) {
     </div>
   )
 }
+
+CardComponent.propTypes = {
+  imgURL: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired
+};
 
 export default CardComponent
