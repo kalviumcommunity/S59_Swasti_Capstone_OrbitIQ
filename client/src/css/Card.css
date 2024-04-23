@@ -1,0 +1,40 @@
+.card-div-module {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 205px;
+    padding: 40px;
+    border-radius: 11px;
+    cursor: pointer;
+    width: 189px;
+    background: rgb(111, 250, 201);
+    background: linear-gradient(180deg, rgba(111, 250, 201, 1) 72%, rgba(0, 4, 223, 0.8904353977919293) 100%);
+}
+
+.card-div-module:hover {
+    box-shadow: rgb(60, 111, 92) 3px 3px 6px 0px inset, rgba(71, 154, 125, 0.496) -3px -3px 6px 1px inset;
+    background: linear-gradient(180deg, rgb(103, 222, 181) 72%, rgba(58, 61, 218, 0.901) 100%);
+    transition: box-shadow 0.5s ease;
+}
+
+.card-div-module img {
+    height: 12em;
+}
+
+.card-div-module p {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.card-container {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.levels {
+    text-align: left;
+}

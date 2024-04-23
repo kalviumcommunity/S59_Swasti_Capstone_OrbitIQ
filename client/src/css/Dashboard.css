@@ -6,64 +6,70 @@
   background-color: #000137;
   cursor: pointer;
 }
+
 .logout img {
   height: 40px;
 }
+
 .p-dashboard {
   display: flex;
 }
+
 .navholder {
   min-width: 15%;
   background: rgb(75, 169, 136);
-  background: linear-gradient(
-    0deg,
-    rgba(75, 169, 136, 1) 23%,
-    rgba(111, 250, 201, 1) 55%,
-    rgba(66, 148, 119, 1) 82%
-  );
+  background: linear-gradient(0deg, rgba(75, 169, 136, 1) 20%, rgba(111, 250, 201, 0.8822030032716212) 51%, rgba(66, 148, 119, 1) 81%);
   display: flex;
-  height: 100vh;
-  gap: 30px;
+  gap: 70px;
   flex-direction: column;
   align-items: center;
 }
+
 .sideNav {
   display: flex;
   flex-direction: column;
   gap: 30px;
   width: 100%;
 }
+
 .option-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .option-logo img {
   height: 5vw;
 }
+
 .option-logo h1 {
   margin: 0;
 }
+
 .option-1 {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px;
 }
+
 .option-1:hover {
   border-right: 4px solid #e94444;
   background-color: #4e4e4e79;
   cursor: pointer;
 }
+
 .option-1 img {
   height: 3vw;
 }
+
 .option-1 p {
   font-size: 20px;
   font-family: "Inter";
   margin: 0;
 }
+
 .profile-div {
   background-color: #000137;
   display: flex;
@@ -72,11 +78,12 @@
   align-items: center;
   border-radius: 2em;
   height: 190px;
-  width: 160px;
+  width: fit-content;
   padding: 10px;
   gap: 20px;
   cursor: pointer;
 }
+
 .profile-div .profile-img {
   background-color: aliceblue;
   height: 5vw;
@@ -84,20 +91,30 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
 .profile-div h3,
 .profile-div p {
   margin: 0;
 }
+
 .profile-img img {
   height: 5vw;
 }
+
 .main-dash {
+  overflow: scroll;
   display: flex;
+  height: 100vh;
   flex-direction: column;
   width: 100%;
   align-items: center;
   gap: 30px;
 }
+
+.main-dash::-webkit-scrollbar {
+  display: none;
+}
+
 .greetings-div {
   height: 10vw;
   width: 80vw;
@@ -107,23 +124,28 @@
   gap: 600px;
   border-radius: 15px;
   background: rgb(111, 250, 201);
-  background: linear-gradient(
-    90deg,
-    rgba(111, 250, 201, 1) 0%,
-    rgba(66, 148, 119, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(111, 250, 201, 1) 0%,
+      rgba(66, 148, 119, 1) 100%);
 }
+
 .greetings-div h1 {
   font-family: "Inter";
-  font-size: 41px;
+  font-size: 46px;
+  margin: 40px;
   font-weight: bolder;
+  color: #ffffff;
+  text-shadow: 5px 3px 10px rgba(106, 179, 153, 0.789);
 }
+
 .greetings-div span {
   color: #05034c;
 }
+
 .greetings-div img {
   height: 10vw;
 }
+
 .search-bar {
   background-color: #fffefe;
   border-radius: 20px;
@@ -133,7 +155,10 @@
   justify-content: center;
   align-items: center;
 }
+
 .search-bar input {
+  padding: 1px;
+  margin-left: 40px;
   background-color: #fffefe;
   border: none;
   outline: none;
@@ -142,11 +167,13 @@
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   color: rgb(49, 49, 49);
-  
+
 }
+
 .search-bar img {
   height: 30px;
 }
+
 .bell-div {
   display: flex;
   align-items: center;
@@ -155,16 +182,16 @@
   width: 44px;
   border-radius: 50%;
   background: rgb(66, 148, 119);
-  background: linear-gradient(
-    180deg,
-    rgba(66, 148, 119, 1) 0%,
-    rgba(30, 68, 115, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(66, 148, 119, 1) 0%,
+      rgba(30, 68, 115, 1) 100%);
 }
+
 .bell-div img {
   height: 25px;
   width: 22px;
 }
+
 .top-search-div {
   display: flex;
   gap: 20px;
@@ -172,13 +199,12 @@
   margin-top: 20px;
   margin-right: 30px;
 }
+
 .search-img-back {
   background: rgb(111, 250, 201);
-  background: linear-gradient(
-    180deg,
-    rgba(111, 250, 201, 1) 0%,
-    rgba(66, 148, 119, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(111, 250, 201, 1) 0%,
+      rgba(66, 148, 119, 1) 100%);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   width: 56px;
