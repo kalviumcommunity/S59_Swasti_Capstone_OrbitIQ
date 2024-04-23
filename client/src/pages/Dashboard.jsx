@@ -10,6 +10,7 @@ import Profile from "../assets/profile-default.png";
 import MagnifyingGlass from "../assets/magnifying-glass.png";
 import Bell from "../assets/bell.png";
 import Slider1 from "../assets/Slider1.png";
+import CardContainer from "../components/CardContainer";
 
 const API_URI = `${import.meta.env.VITE_API_URI}/user/logout`;
 
@@ -91,6 +92,7 @@ export default function Dashboard() {
           )}
           <img src={Slider1} />
         </div>
+        <CardContainer />
       </div>
     </div>
   );
