@@ -14,7 +14,8 @@ import "../css/About.css";
 export default function About() {
   return (
     <>
-      <div className="text-box">
+    <div className="about-section">
+      <div className="text-box ">
         <p className="text-align-center">| About OrbitIQ</p>
         <p className="about-text">
           OrbitIQ is the ultimate destination for space enthusiasts, offering a
@@ -68,6 +69,8 @@ export default function About() {
           </div>
         </div>
 
+    </div>
+      </div>
         <Parallax strength={800} bgImage={Astro}>
           <div className="get-started-box">
             <img src={PlanetIcon} alt="planet" />
@@ -82,7 +85,6 @@ export default function About() {
           <TextBox />
           <Footer />
         </Parallax>
-      </div>
-    </>
+      </>
   );
 }

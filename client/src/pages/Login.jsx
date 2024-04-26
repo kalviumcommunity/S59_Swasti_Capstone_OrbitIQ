@@ -42,12 +42,14 @@ function Login() {
 
       if (response.ok) {
         const Email = data.email;
+        const Password = data.password;
         const { message, Username } = await response.json();
         toast.success("Authentication successful");
         setTimeout(() => {
-          navigate("/dashboard", { state: { Username, Email } });
+          navigate("/dashboard", { state: { Username, Email, Password } });
         }, 3000);
       } else {
+        toast.error("Invalid username and password")
         console.error("Login failed");
       }
     } catch (error) {

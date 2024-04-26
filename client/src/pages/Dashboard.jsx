@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import Exit from "../assets/exit.png";
 import "../css/Dashboard.css";
@@ -6,7 +7,7 @@ import LogoDash from "../assets/Logo-white.png";
 import Home from "../assets/Home.png";
 import Quiz from "../assets/ideas.png";
 import Funfact from "../assets/fun-fact.png";
-import Profile from "../assets/profile-default.png";
+import ProfileImg from "../assets/profile-default.png";
 import MagnifyingGlass from "../assets/magnifying-glass.png";
 import Bell from "../assets/bell.png";
 import Slider1 from "../assets/Slider1.png";
@@ -19,7 +20,8 @@ export default function Dashboard() {
   const location = useLocation();
   const username = location.state?.Username;
   const email = location.state?.Email;
-
+  const password = location.state?.Password;
+  const profileImg = 'profile-default.png'
   const handleLogout = async () => {
     try {
       const response = await fetch(API_URI, {
@@ -59,13 +61,18 @@ export default function Dashboard() {
             <p>Wonders</p>
           </div>
         </div>
-        <div className="profile-div">
-          <div className="profile-img">
-            <img src={Profile} alt="profile" />
-          </div>
-          <h3>{username}</h3>
-          <p>{email}</p>
-        </div>
+        {console.log(username, email, password)}
+        <Link to='/profile' state={{ username: username, email: email, password: password, profileImg: profileImg }} style={{
+          textDecoration: "none",
+          color: "inherit",
+          fontWeight: "normal",
+        }}><div className="profile-div">
+            <div className="profile-img">
+              <img src={ProfileImg} alt="profile" />
+            </div>
+            <h3>{username}</h3>
+            <p>{email}</p>
+          </div></Link>
         <div className="logout" onClick={handleLogout}>
           <img className="exit" src={Exit} />
         </div>

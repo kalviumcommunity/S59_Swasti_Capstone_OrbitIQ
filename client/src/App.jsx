@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import "./App.css";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
     </>
   );

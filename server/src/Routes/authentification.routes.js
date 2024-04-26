@@ -17,10 +17,13 @@ router.get("/",async(req,res)=>{
 router.post("/login", async (req, res) => {
     const {Email, Password } = req.body;
     try {
-      const user = await User.findOne({ Email: Email });
+      const user = await User.findOne({ Email: Email ,Password:Password});
       if(user){
         const { Username } = user;
         res.status(200).json({ message: "Login successful",Username:Username});
+      }
+      else{
+        res.status(401).json({message:"Check your Email and Password"});
       }
     } catch (error) {
       res.status(500).json({ message: "Internal server error:Login failed" });
