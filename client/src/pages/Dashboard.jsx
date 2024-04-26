@@ -21,6 +21,7 @@ export default function Dashboard() {
   const username = location.state?.Username;
   const email = location.state?.Email;
   const password = location.state?.Password;
+  const userId=location.state?.UserId;
   const profileImg = 'profile-default.png'
   const handleLogout = async () => {
     try {
@@ -61,8 +62,7 @@ export default function Dashboard() {
             <p>Wonders</p>
           </div>
         </div>
-        {console.log(username, email, password)}
-        <Link to='/profile' state={{ username: username, email: email, password: password, profileImg: profileImg }} style={{
+        <Link to='/profile' state={{ Username: username, Email: email, Password: password, ProfileImg: profileImg ,UserId:userId}} style={{
           textDecoration: "none",
           color: "inherit",
           fontWeight: "normal",
