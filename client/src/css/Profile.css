@@ -25,27 +25,49 @@
 
 .user-img-div img {
     height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.profile-user-change {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+
+}
+
+.profile-user-change input {
+    width: 190px;
+    cursor: pointer;
+    color: rgb(167, 234, 255);
 }
 
 .bx-edit {
     font-size: 40px;
 }
 
-.form-custom{
+.form-custom {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
 }
-.user-form-update{
+
+.user-form-update {
     width: 100%;
 }
-.form-custom input{
+
+.form-custom input {
     width: 500px;
 }
-.button-save-update{
+
+.button-save-update {
     display: flex;
+    flex-direction: column;
+    gap: 30px;
     margin: 40px;
     margin-right: 70px;
     align-self: self-end;

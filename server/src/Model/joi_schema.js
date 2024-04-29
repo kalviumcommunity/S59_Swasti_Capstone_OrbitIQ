@@ -5,18 +5,19 @@ const schema = Joi.object({
   description: Joi.string().required()
 });
 
-const UserSchema=Joi.object({
-  Username:Joi.string().required(),
-  Email:Joi.string().required(),
-  Password:Joi.string().required()
+const UserSchema = Joi.object({
+  Username: Joi.string().required(),
+  Email: Joi.string().required(),
+  Password: Joi.string().required(),
+  Image: Joi.string()
 })
 
-const ValidateSchema=(input)=>{
+const ValidateSchema = (input) => {
   return schema.validate(input);
 }
 
-const ValidateUserSchema=(input)=>{
-return UserSchema.validate(input);
+const ValidateUserSchema = (input) => {
+  return UserSchema.validate(input);
 }
 
-module.exports= {ValidateSchema,ValidateUserSchema};
+module.exports = { ValidateSchema, ValidateUserSchema };
