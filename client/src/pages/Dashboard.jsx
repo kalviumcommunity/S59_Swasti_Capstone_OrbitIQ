@@ -1,28 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Exit from "../assets/exit.png";
 import "../css/Dashboard.css";
 import LogoDash from "../assets/Logo-white.png";
 import Home from "../assets/Home.png";
 import Quiz from "../assets/ideas.png";
 import Funfact from "../assets/fun-fact.png";
-import ProfileImg from "../assets/profile-default.png";
 import MagnifyingGlass from "../assets/magnifying-glass.png";
 import Bell from "../assets/bell.png";
 import Slider1 from "../assets/Slider1.png";
 import CardContainer from "../components/CardContainer";
 
 const API_URI = `${import.meta.env.VITE_API_URI}/user/logout`;
+const GetImage_URI = `${import.meta.env.VITE_API_URI}/upload`;
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const username = location.state?.Username;
-  const email = location.state?.Email;
-  const password = location.state?.Password;
-  const userId=location.state?.UserId;
-  const profileImg = 'profile-default.png'
+  const [imageURL, setImageURL] = useState(null);
+  const username = sessionStorage.getItem("Username");
+  const email = sessionStorage.getItem("Email");
+  const userId = sessionStorage.getItem("UserId");
+
+  const getImage = () => {
+    fetch(`${GetImage_URI}/profileImage/${userId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log(response)
+        return response.blob();
+      })
+      .then(blob => {
+        const imageURL = URL.createObjectURL(blob);
+        setImageURL(imageURL);
+      })
+      .catch(error => {
+        console.error('Image Fetch Error:', error);
+      });
+  }
+  useEffect(() => {
+    getImage();
+  }, [])
+
   const handleLogout = async () => {
     try {
       const response = await fetch(API_URI, {
@@ -62,13 +82,13 @@ export default function Dashboard() {
             <p>Wonders</p>
           </div>
         </div>
-        <Link to='/profile' state={{ Username: username, Email: email, Password: password, ProfileImg: profileImg ,UserId:userId}} style={{
+        <Link to='/profile' style={{
           textDecoration: "none",
           color: "inherit",
           fontWeight: "normal",
         }}><div className="profile-div">
             <div className="profile-img">
-              <img src={ProfileImg} alt="profile" />
+              <img src={imageURL} alt="profile" />
             </div>
             <h3>{username}</h3>
             <p>{email}</p>

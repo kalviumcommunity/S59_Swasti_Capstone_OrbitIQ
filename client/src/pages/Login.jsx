@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Signup.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
-import PersonIcon from "@mui/icons-material/Person";
 import { useForm } from "react-hook-form";
 import ErrorImage from "../assets/error.png";
 import Slider1 from "../assets/Slider1.png";
@@ -41,12 +40,14 @@ function Login() {
       });
 
       if (response.ok) {
-        const Email = data.email;
-        const Password = data.password;
-        const { message, Username ,UserId} = await response.json();
+        const { Username, UserId} = await response.json();
         toast.success("Authentication successful");
+        sessionStorage.setItem("Username", Username);
+        sessionStorage.setItem("Email", data.email);
+        sessionStorage.setItem("Password", data.password);
+        sessionStorage.setItem("UserId", UserId);
         setTimeout(() => {
-          navigate("/dashboard", { state: { Username, Email, Password ,UserId} });
+          navigate("/dashboard");
         }, 3000);
       } else {
         toast.error("Invalid username and password");

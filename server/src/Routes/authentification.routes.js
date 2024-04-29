@@ -4,7 +4,7 @@ const User = require("../Model/user_schema");
 const { ValidateUserSchema } = require("../Model/joi_schema");
 
 router.post("/checkpassword/:id", async (req, res) => {
-  const  {OldPass}  = req.body;
+  const { OldPass } = req.body;
   const userId = req.params.id;
 
   try {
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ Email: Email, Password: Password });
     if (user) {
       const { Username } = user;
-      res.status(200).json({ message: "Login successful", Username: Username, UserId: user._id });
+      res.status(200).json({ message: "Login successful", Username: Username, UserId: user._id});
     }
     else {
       res.status(401).json({ message: "Check your Email and Password" });

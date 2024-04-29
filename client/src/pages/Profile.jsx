@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation } from 'react-router-dom';
 import "../css/Profile.css"
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useForm } from "react-hook-form";
+import ImageUpload from '../components/ImageUpload';
+import BackButton from '../components/backButton';
 
 
 const API_URI = `${import.meta.env.VITE_API_URI}/user`;
@@ -17,19 +18,23 @@ function Profile() {
     watch,
     formState: { errors },
   } = useForm();
+
+  const Username = sessionStorage.getItem("Username");
+  const Email = sessionStorage.getItem("Email");
+  const Password = sessionStorage.getItem("Password");
+  const UserId = sessionStorage.getItem("UserId");
   const [registeredData, setRegisteredData] = useState({});
-  const location = useLocation();
-  const { Username, Email, ProfileImg, Password, UserId } = location.state;
   const [isChangePass, setChangePass] = useState(false);
   const [OldPass, setOldPassword] = useState("");
   const [isVerified, setVerified] = useState(false);
   const [error, setError] = useState("");
-  const [newPassword, setNewPassword] = useState(Password);
-  const [newUsername, setNewUsername] = useState(Username);
+  const [newPassword, setNewPassword] = useState("");
+  const [newUsername, setNewUsername] = useState("");
   const handleClose = () => {
     setChangePass(false);
     setVerified(false);
   }
+
   const checkVerified = async () => {
     console.log(OldPass)
     try {
@@ -69,7 +74,6 @@ function Profile() {
     console.log(data);
     if (isVerified) {
       handleUpdate(UserId);
-      
     }
   };
 
@@ -173,8 +177,7 @@ function Profile() {
       </Dialog>
       <div className='flex-profile-div'>
         <div className='user-img-div'>
-          <img src={ProfileImg} alt='profile-img' />
-          <Button className='Edit-button' variant='contained' startIcon={<i className='bx bx-edit'></i>}>Change Profile</Button>
+          <ImageUpload userId={UserId} />
         </div>
         <div className='user-form-update'>
           <form className="form-custom">
@@ -198,6 +201,7 @@ function Profile() {
             </div>
             <div className='button-save-update'>
               <Button onClick={() => setChangePass(true)} variant='outlined'>Change Password</Button>
+              <BackButton />
             </div>
           </form>
 
