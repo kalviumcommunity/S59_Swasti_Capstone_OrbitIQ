@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
 import "../css/Profile.css"
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,InputAdornment , Typography} from "@mui/material";
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useForm } from "react-hook-form";
 
@@ -19,14 +19,14 @@ function Profile() {
   } = useForm();
   const [registeredData, setRegisteredData] = useState({});
   const location = useLocation();
-  const { Username, Email, ProfileImg,UserId} = location.state;
+  const { Username, Email, ProfileImg, Password, UserId } = location.state;
   const [isChangePass, setChangePass] = useState(false);
-  const [isVerified,setVerified]=useState(false);
-  const [error,setError]=useState("");
-  const [OldPass,setOldPassword] =useState("");
-  const [newPassword,setNewPassword] =useState(Password);
-  const [newUsername,setNewUsername]=useState(Username);
-  const handleClose=()=>{
+  const [OldPass, setOldPassword] = useState("");
+  const [isVerified, setVerified] = useState(false);
+  const [error, setError] = useState("");
+  const [newPassword, setNewPassword] = useState(Password);
+  const [newUsername, setNewUsername] = useState(Username);
+  const handleClose = () => {
     setChangePass(false);
     setVerified(false);
   }
@@ -38,7 +38,7 @@ function Profile() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({OldPass}),
+        body: JSON.stringify({ OldPass }),
       });
       console.log(response)
       if (response.ok) {
@@ -48,6 +48,7 @@ function Profile() {
         if (isPasswordMatch) {
           setVerified(true);
           setError("");
+          handleSubmit(onSubmit)();
         } else {
           setVerified(false);
           setError("Incorrect password");
@@ -63,18 +64,21 @@ function Profile() {
     }
   }
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     setRegisteredData(data);
     console.log(data);
+    if (isVerified) {
+      handleUpdate(UserId);
+      
+    }
   };
 
   const handleUpdate = async (id) => {
     try {
       const updatedObj = {
-        Username: registeredData.username || Username,
         Password: registeredData.password,
       };
-  
+
       const response = await fetch(`${API_URI}/changeUserData/${id}`, {
         method: "PATCH",
         headers: {
@@ -82,51 +86,41 @@ function Profile() {
         },
         body: JSON.stringify(updatedObj),
       });
-  
+
       if (response.ok) {
         const updatedUser = await response.json();
         console.log(updatedUser)
         console.log("updated");
-  
-        // Clear the new password field after successful update
-        setNewPassword("");
       } else {
         const errorMessage = await response.text();
         toast.error("Failed to update : " + errorMessage);
         console.error("Error:", errorMessage);
       }
     } catch (error) {
-      toast.error("An error occurred while updating user: " + error.message);
+      toast.error("An error occurred while updating: " + error.message);
       console.error("Error:", error);
     }
   };
-
-  useEffect(()=>{
-    console.log(newPassword)
-  },[newPassword])
-  
   return (
     <div className='parent-profile-div'>
       <Dialog open={isChangePass} onClose={handleClose}>
         <DialogContent>
           <DialogTitle>Change your Password</DialogTitle>
-          <form className="form-custom" onSubmit={()=>{
-            handleSubmit(onSubmit)
-          }}>
+          <form className="form-custom" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <TextField sx={{ marginTop: "20px",width: '520px' }}
+              <TextField sx={{ marginTop: "20px", width: '520px' }}
                 label="Verify Your Old Password"
                 type="password"
                 onChange={(e) => setOldPassword(e.target.value)}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      {!isVerified?<Button
+                      {!isVerified ? <Button
                         style={{ minWidth: '0' }}
                         onClick={checkVerified}
                       >
                         Verify
-                      </Button>:<><Typography color="green">Verified</Typography><CheckCircleOutlineIcon style={{ color: 'green' ,marginLeft:'3px'}}/></>}
+                      </Button> : <><Typography color="green">Verified</Typography><CheckCircleOutlineIcon style={{ color: 'green', marginLeft: '3px' }} /></>}
                     </InputAdornment>
                   ),
                 }}
@@ -136,7 +130,7 @@ function Profile() {
               {error && <Typography color="error">{error}</Typography>}
             </div>
             <div>
-              <TextField sx={{ marginTop: "20px" ,width: '520px' }}
+              <TextField sx={{ marginTop: "20px", width: '520px' }}
                 label="New Password"
                 type="password"
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -149,13 +143,13 @@ function Profile() {
                 })}
               />
               {errors.password && (
-                      <div className="error">
-                        <Typography color="error">{errors.password.message}</Typography>
-                      </div>
-                    )}
+                <div className="error">
+                  <Typography color="error">{errors.password.message}</Typography>
+                </div>
+              )}
             </div>
             <div>
-              <TextField sx={{ marginTop: "30px" ,width: '520px' }}
+              <TextField sx={{ marginTop: "30px", width: '520px' }}
                 label="Confirm Password"
                 type="password"
                 disabled={!isVerified}
@@ -163,15 +157,15 @@ function Profile() {
                   required: true,
                   validate: (value) => value === watch("password"),
                 })}
-                
+
               />
               {errors.confirmpassword && (
-                  <div className="error">
-                    <p>{errors.confirmpassword.message}</p>
-                  </div>)}
+                <div className="error">
+                  <p>{errors.confirmpassword.message}</p>
+                </div>)}
             </div>
             <DialogActions>
-              <Button type='submit' variant='contained' onClick={() => handleUpdate(UserId)} >Change Password</Button>
+              <Button type='submit' variant='contained' disabled={!isVerified}>Change Password</Button>
             </DialogActions>
 
           </form>
@@ -189,8 +183,7 @@ function Profile() {
                 label="Username"
                 type="text"
                 value={Username}
-                {...register("username")}
-                onChange={(e) => {setNewUsername(e.target.value)}}
+                disabled={true}
                 required
               />
             </div>
@@ -204,15 +197,13 @@ function Profile() {
               />
             </div>
             <div className='button-save-update'>
-              <Button onClick={() => setChangePass(true)}>Change Password</Button>
-              <Button variant='contained' onClick={() => handleUpdate(UserId)}>Update</Button>
+              <Button onClick={() => setChangePass(true)} variant='outlined'>Change Password</Button>
             </div>
-
           </form>
 
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

@@ -45,9 +45,8 @@
     width: 500px;
 }
 .button-save-update{
-    width: 50%;
     display: flex;
     margin: 40px;
-    align-self: last baseline;
-    justify-content: space-between;
+    margin-right: 70px;
+    align-self: self-end;
 }
