@@ -1,27 +1,52 @@
-.parent-profile-div{
+.parent-profile-div {
     display: flex;
     justify-content: center;
     height: 100vh;
     align-items: center;
 }
-.flex-profile-div{
+
+.flex-profile-div {
     display: flex;
     width: 1000px;
     height: 500px;
     border-radius: 1em;
     background-color: aliceblue;
 }
-.user-img-div{
+
+.user-img-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  min-width: 30%;
-  background-color: rgba(24, 30, 29, 0.601);
+    gap: 30px;
+    min-width: 30%;
+    background-color: rgba(24, 30, 29, 0.601);
 }
-.user-img-div img{
+
+.user-img-div img {
     height: 200px;
 }
-.bx-edit{
+
+.bx-edit {
     font-size: 40px;
+}
+
+.form-custom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.user-form-update{
+    width: 100%;
+}
+.form-custom input{
+    width: 500px;
+}
+.button-save-update{
+    display: flex;
+    margin: 40px;
+    margin-right: 70px;
+    align-self: self-end;
 }

@@ -43,16 +43,17 @@ function Login() {
       if (response.ok) {
         const Email = data.email;
         const Password = data.password;
-        const { message, Username } = await response.json();
+        const { message, Username ,UserId} = await response.json();
         toast.success("Authentication successful");
         setTimeout(() => {
-          navigate("/dashboard", { state: { Username, Email, Password } });
+          navigate("/dashboard", { state: { Username, Email, Password ,UserId} });
         }, 3000);
       } else {
-        toast.error("Invalid username and password")
+        toast.error("Invalid username and password");
         console.error("Login failed");
       }
     } catch (error) {
+      toast.error("Internal Server Error");
       console.error("Login failed:", error);
     }
   };
