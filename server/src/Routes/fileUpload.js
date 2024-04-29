@@ -11,6 +11,13 @@ const storage = multer.diskStorage({
         return nd(null, `${Date.now() + file.originalname}`);
     }
 });
+const validateFile = (req, file, nd) => {
+    if (!file.mimetype.startsWith('image')) {
+        return nd(new Error("Images are allowed"))
+    }
+    nd(null, true);
+}
+const upload = multer({ storage: storage, validateFile: validateFile });
 const path = require('path');
 
 router.get("/profileImage/:userId", async (req, res) => {
@@ -20,14 +27,13 @@ router.get("/profileImage/:userId", async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
-        const imagePath = path.join(__dirname, '..', '..', user.Image);
+        const imagePath = path.resolve(__dirname, '..', '..', user.Image);
         res.sendFile(imagePath);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
-const upload = multer({ storage });
 
 router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, res) => {
     try {
@@ -40,8 +46,8 @@ router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, r
         await user.save();
         res.json(user);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+        console.error(`File can't be uploaded:` + error);
+        res.status(500).send('Internal Server Error:' + error);
     }
 });
 

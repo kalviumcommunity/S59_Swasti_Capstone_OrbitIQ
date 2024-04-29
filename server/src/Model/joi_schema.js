@@ -9,7 +9,7 @@ const UserSchema = Joi.object({
   Username: Joi.string().required(),
   Email: Joi.string().required(),
   Password: Joi.string().required(),
-  Image: Joi.string()
+  Image: Joi.string().default('./public/profile-default.png').required()
 })
 
 const ValidateSchema = (input) => {
