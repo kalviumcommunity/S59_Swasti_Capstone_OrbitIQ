@@ -1,8 +1,45 @@
+const passport = require('passport');
 const express = require("express");
 const router = express.Router();
 const User = require("../Model/user_schema");
 const { ValidateUserSchema } = require("../Model/joi_schema");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+require('dotenv').config();
 
+const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
+const URL = process.env.URL;
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: `${URL}/google/callback`,
+  scope: ['email', 'profile'] 
+},
+async (accessToken, refreshToken, profile, cb) => {
+  try {
+    const email = profile.emails[0].value;
+    const username=profile.displayName;
+    let user = await User.findOne({ Email: email });
+
+    if (!user) {
+      user = new User({ Username:username,Email: email });
+      await user.save();
+    }
+
+    return cb(null, user);
+  } catch (error) {
+    return cb(error, null);
+  }
+}
+));
+
+
+router.get('/google',passport.authenticate("google",{scope:['profile','email']}))
+
+router.get('/google/callback',passport.authenticate("google",{failureRedirect:'/login'}),(req,res)=>{
+  res.redirect('/')
+})
 router.post("/checkpassword/:id", async (req, res) => {
   const { OldPass } = req.body;
   const userId = req.params.id;
