@@ -21,7 +21,6 @@ function Profile() {
 
   const Username = sessionStorage.getItem("Username");
   const Email = sessionStorage.getItem("Email");
-  const Password = sessionStorage.getItem("Password");
   const UserId = sessionStorage.getItem("UserId");
   const [registeredData, setRegisteredData] = useState({});
   const [isChangePass, setChangePass] = useState(false);

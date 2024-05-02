@@ -5,44 +5,82 @@ const User = require("../Model/user_schema");
 const { ValidateUserSchema } = require("../Model/joi_schema");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
+const GoogleUser = require("../Model/google_user");
 
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const URL = process.env.URL;
+const CLIENT_URL=process.env.CLIENT_URL;
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${URL}/google/callback`,
-  scope: ['email', 'profile'] 
+  callbackURL: `${URL}/user/google/callback`,
+  scope: ['profile', 'email']
 },
-async (accessToken, refreshToken, profile, cb) => {
-  try {
-    const email = profile.emails[0].value;
-    const username=profile.displayName;
-    let user = await User.findOne({ Email: email });
+  async (accessToken, refreshToken, profile, cb) => {
+    try {
+      const userData = profile._json;
+      const email = userData.email;
+      const username = userData.name;
+      const picture = userData.picture;
+      console.log("Google authentication user data:", userData);
+      let user = await User.findOne({ Email: email });
 
-    if (!user) {
-      user = new User({ Username:username,Email: email });
-      await user.save();
+      if (!user) {
+        user = new User({ Username: username, Email: email, Image: picture });
+        await user.save();
+      }
+      const { _id, Username, Image, Email } = user;
+      await GoogleUser.deleteMany({});
+      const ship = new GoogleUser({ UserId: user._id, Username, Image, Email })
+      const resp = await ship.save()
+      console.log(resp);
+      return cb(null, user);
+    } catch (error) {
+      return cb(error, null);
     }
-
-    return cb(null, user);
-  } catch (error) {
-    return cb(error, null);
   }
-}
 ));
 
-
-router.get('/google',passport.authenticate("google",{scope:['profile','email']}))
-
-router.get('/google/callback',passport.authenticate("google",{failureRedirect:'/login'}),(req,res)=>{
-  res.redirect('/')
+passport.serializeUser(function (User, cb) {
+  cb(null, User.id);
 })
+
+passport.deserializeUser(async function (id, cb) {
+  try {
+    const user = await User.findById(id);
+    cb(null, user);
+  } catch (err) {
+    cb(err, null);
+  }
+});
+
+router.get('/google', passport.authenticate("google", { scope: ['profile', 'email'] }))
+
+router.get('/google/callback', passport.authenticate("google", { failureRedirect: `${CLIENT_URL}/login`, successRedirect: `${CLIENT_URL}/google/success` }));
+
+router.get('/google/login/success', async (req, res) => {
+  try {
+    const users = await GoogleUser.find();
+    if (users.length === 0) {
+      res.status(404).json({ message: 'No users found' });
+      return;
+    }
+    const user = users[0];
+    res.json({ Username: user.Username, Image: user.Image, Email: user.Email, UserId: user.UserId });
+  } catch (error) {
+    res.status(500).json({ error: "Error retrieving user data: " + error });
+  }
+});
+
 router.post("/checkpassword/:id", async (req, res) => {
   const { OldPass } = req.body;
   const userId = req.params.id;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: 'User ID is required' });
+  }
 
   try {
     const user = await User.findById(userId);
@@ -86,8 +124,8 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ Email: Email, Password: Password });
     if (user) {
-      const { Username } = user;
-      res.status(200).json({ message: "Login successful", Username: Username, UserId: user._id});
+      const { Username, Image, Email } = user;
+      res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: user._id });
     }
     else {
       res.status(401).json({ message: "Check your Email and Password" });

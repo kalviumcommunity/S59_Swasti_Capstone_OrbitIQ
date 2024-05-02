@@ -28,19 +28,11 @@ function Login() {
     formState: { errors },
   } = useForm();
   const [registeredData, setRegisteredData] = useState({});
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await fetch(`${API_URI}/google`);
-      if (response.ok) {
-        window.location.href = response.url;
-      } else {
-        console.error("Failed to initiate Google OAuth");
-      }
-    } catch (error) {
-      console.error("Error during Google OAuth:", error);
-    }
-  };
 
+  const handleGoogleLogin = () => {
+    window.open(`${API_URI}/login/google`,
+      "_self")
+  }
 
   const onSubmit = async (data) => {
     setRegisteredData(data);
@@ -54,10 +46,10 @@ function Login() {
       });
 
       if (response.ok) {
-        const { Username, UserId } = await response.json();
+        const { Username, UserId, Email } = await response.json();
         toast.success("Authentication successful");
         sessionStorage.setItem("Username", Username);
-        sessionStorage.setItem("Email", data.email);
+        sessionStorage.setItem("Email", data.email || Email);
         sessionStorage.setItem("Password", data.password);
         sessionStorage.setItem("UserId", UserId);
         setTimeout(() => {

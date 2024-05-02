@@ -18,9 +18,9 @@ app.use(session({
   cookie: { secure: false }
 }))
 
-app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 app.use(express.json());
 app.use('/data', routes);
