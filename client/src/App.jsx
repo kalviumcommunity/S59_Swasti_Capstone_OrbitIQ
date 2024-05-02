@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import "./App.css";
 import Profile from "./pages/Profile";
+import GoogleLoader from "./components/GoogleLoader";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/google/success" element={<GoogleLoader/>}/>
       </Routes>
     </>
   );

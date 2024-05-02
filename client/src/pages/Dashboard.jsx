@@ -50,6 +50,7 @@ export default function Dashboard() {
       });
       if (response.ok) {
         console.log("Logout successful");
+        sessionStorage.clear();
         setTimeout(() => {
           navigate("/");
         }, 1000);

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Signup.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,9 +13,10 @@ import { useForm } from "react-hook-form";
 import ErrorImage from "../assets/error.png";
 import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
+import GoogleButton from "react-google-button";
 import { Link } from "react-router-dom";
 
-const API_URI = `${import.meta.env.VITE_API_URI}/user/login`;
+const API_URI = `${import.meta.env.VITE_API_URI}/user`;
 
 function Login() {
   const navigate = useNavigate();
@@ -28,10 +29,15 @@ function Login() {
   } = useForm();
   const [registeredData, setRegisteredData] = useState({});
 
+  const handleGoogleLogin = () => {
+    window.open(`${API_URI}/google`,
+      "_self")
+  }
+
   const onSubmit = async (data) => {
     setRegisteredData(data);
     try {
-      const response = await fetch(API_URI, {
+      const response = await fetch(`${API_URI}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,10 +46,10 @@ function Login() {
       });
 
       if (response.ok) {
-        const { Username, UserId} = await response.json();
+        const { Username, UserId, Email } = await response.json();
         toast.success("Authentication successful");
         sessionStorage.setItem("Username", Username);
-        sessionStorage.setItem("Email", data.email);
+        sessionStorage.setItem("Email", data.email || Email);
         sessionStorage.setItem("Password", data.password);
         sessionStorage.setItem("UserId", UserId);
         setTimeout(() => {
@@ -145,6 +151,7 @@ function Login() {
                 <p className="login">or Not a member? Register now</p>
               </Link>
             </div>
+            <GoogleButton className="align-center-google" onClick={handleGoogleLogin} />
           </form>
         </div>
         <div className="sub-div-two-sign">

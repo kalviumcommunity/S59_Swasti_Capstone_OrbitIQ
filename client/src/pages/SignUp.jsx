@@ -15,8 +15,9 @@ import ErrorImage from "../assets/error.png";
 import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
 import { Link } from "react-router-dom";
+import GoogleButton from "react-google-button";
 
-const API_URI= `${import.meta.env.VITE_API_URI}/user/signup`
+const API_URI = `${import.meta.env.VITE_API_URI}/user`
 
 function SignUp() {
   const navigate = useNavigate();
@@ -28,16 +29,21 @@ function SignUp() {
   } = useForm();
   const [registeredData, setRegisteredData] = useState({});
 
+  const handleGoogleLogin = () => {
+    window.open(`${API_URI}/google`,
+      "_self")
+  }
+
   const onSubmit = async (data) => {
     setRegisteredData(data);
     console.log(data);
     try {
-      const response = await fetch(API_URI, {
+      const response = await fetch(`${API_URI}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({Username:data.name,Email:data.email,Password:data.password}),
+        body: JSON.stringify({ Username: data.name, Email: data.email, Password: data.password }),
       });
       if (response.ok) {
         console.log("Registered successful");
@@ -193,6 +199,7 @@ function SignUp() {
                 <p className="login">or I’m already a member</p>
               </Link>
             </div>
+            <GoogleButton className="align-center-google" label="Sign up with google" onClick={handleGoogleLogin} />
           </form>
         </div>
         <div className="sub-div-two-sign">
@@ -211,7 +218,7 @@ function SignUp() {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
