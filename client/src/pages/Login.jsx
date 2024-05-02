@@ -30,7 +30,7 @@ function Login() {
   const [registeredData, setRegisteredData] = useState({});
 
   const handleGoogleLogin = () => {
-    window.open(`${API_URI}/login/google`,
+    window.open(`${API_URI}/google`,
       "_self")
   }
 

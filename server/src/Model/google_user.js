@@ -20,7 +20,7 @@ const userGoogleSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 5
+        expires: '5s'
     }
 });
 
