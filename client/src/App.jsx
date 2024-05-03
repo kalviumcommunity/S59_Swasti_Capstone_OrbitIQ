@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/" element={loading ? <Loader /> : <Landing />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/dashboard/*" element={<Dashboard/>}/>
         <Route path="/profile" element={<Profile/>} />
         <Route path="/google/success" element={<GoogleLoader/>}/>
       </Routes>

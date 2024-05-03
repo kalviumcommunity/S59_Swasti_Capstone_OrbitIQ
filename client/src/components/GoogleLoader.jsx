@@ -14,10 +14,11 @@ function GoogleLoader() {
                 const response = await fetch(`${API_URI}/google/login/success`);
                 if (response.ok) {
                     const resp = await response.json();
-                    const { Username, UserId, Email } = resp
+                    const { Username, UserId, Email ,Image} = resp
                     sessionStorage.setItem("Username", Username);
                     sessionStorage.setItem("Email", Email);
                     sessionStorage.setItem("UserId", UserId);
+                    sessionStorage.setItem("GoogleImage",Image);
                     console.log(resp)
 
                 } else {

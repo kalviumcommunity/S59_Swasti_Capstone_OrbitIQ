@@ -176,7 +176,7 @@ function Profile() {
       </Dialog>
       <div className='flex-profile-div'>
         <div className='user-img-div'>
-          <ImageUpload userId={UserId} />
+          <ImageUpload userId={UserId}  />
         </div>
         <div className='user-form-update'>
           <form className="form-custom">
