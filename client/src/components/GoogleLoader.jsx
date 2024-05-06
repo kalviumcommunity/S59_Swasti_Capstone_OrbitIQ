@@ -38,6 +38,7 @@ function GoogleLoader() {
 
     return (
         <div className='loading'>
+            <h3>Diving into Space</h3>
             <PacmanLoader color="#6FFAC9" />
         </div>
 
