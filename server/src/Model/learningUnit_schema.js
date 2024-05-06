@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const contentItemSchema = new mongoose.Schema({
-    text: String,
+    text: { type: String, required: true },
     images: [String], 
     videos: [String]
 });
