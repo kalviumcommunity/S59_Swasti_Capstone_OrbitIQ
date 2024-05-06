@@ -11,7 +11,13 @@ import Funfact from "../assets/fun-fact.png";
 const API_URI = `${import.meta.env.VITE_API_URI}/user/logout`;
 const GetImage_URI = `${import.meta.env.VITE_API_URI}/upload`;
 
-export default function SideNav({username,userId,email,GoogleImage}) {
+const linkStyle = {
+  textDecoration: "none",
+  color: "inherit",
+  fontWeight: "normal"
+}
+
+export default function SideNav({ username, userId, email, GoogleImage }) {
   const navigate = useNavigate();
   const [imageURL, setImageURL] = useState(null);
 
@@ -56,62 +62,42 @@ export default function SideNav({username,userId,email,GoogleImage}) {
   };
 
   return (
-      <div className="navholder">
-        <div className="sideNav">
-        <Link to="/" style={{
-          textDecoration: "none",
-          color: "inherit",
-          fontWeight: "normal",
-        }}>
+    <div className="navholder">
+      <div className="sideNav">
+        <Link to="/" style={linkStyle}>
           <div className="option-logo">
             <img src={LogoDash} alt="logo-dash" />
             <h1>OrbitIQ</h1>
           </div>
-          </Link>
-          <Link to="/dashboard" style={{
-          textDecoration: "none",
-          color: "inherit",
-          fontWeight: "normal",
-        }}>
+        </Link>
+        <Link to="/dashboard" style={linkStyle}>
           <div className="option-1">
             <img src={Home} alt="home" />
             <p>Dashboard</p>
           </div>
-          </Link>
-          
-          <Link to="/dashboard/quiz" style={{
-          textDecoration: "none",
-          color: "inherit",
-          fontWeight: "normal",
-        }}><div className="option-1">
+        </Link>
+
+        <Link to="/dashboard/quiz" style={linkStyle}><div className="option-1">
             <img src={Quiz} alt="quiz" />
             <p>Quiz</p>
           </div></Link>
-          <Link to="/dashboard/facts" style={{
-          textDecoration: "none",
-          color: "inherit",
-          fontWeight: "normal",
-        }}>
+        <Link to="/dashboard/facts" style={linkStyle}>
           <div className="option-1">
             <img src={Funfact} alt="funfact" />
             <p>Wonders</p>
           </div>
-          </Link>
-        </div>
-        <Link to='/profile' style={{
-          textDecoration: "none",
-          color: "inherit",
-          fontWeight: "normal",
-        }}><div className="profile-div">
-            <div className="profile-img">
-              <img src={imageURL||GoogleImage} alt="profile" />
-            </div>
-            <h3>{username}</h3>
-            <p>{email}</p>
-          </div></Link>
-        <div className="logout" onClick={handleLogout}>
-          <img className="exit" src={Exit} />
-        </div>
+        </Link>
       </div>
+      <Link to='/profile' style={linkStyle}><div className="profile-div">
+          <div className="profile-img">
+            <img src={imageURL || GoogleImage} alt="profile" />
+          </div>
+          <h3>{username}</h3>
+          <p>{email}</p>
+        </div></Link>
+      <div className="logout" onClick={handleLogout}>
+        <img className="exit" src={Exit} />
+      </div>
+    </div>
   );
 }

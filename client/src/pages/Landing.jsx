@@ -26,6 +26,12 @@ export default function Landing() {
     };
   }, []);
 
+  const linkStyle = {
+    textDecoration: "none",
+    color: "inherit",
+    fontWeight: "normal"
+  }
+
   return (
     <>
       <div className={`parent ${fadeOut ? "fade-out" : ""}`}>
@@ -57,21 +63,13 @@ export default function Landing() {
           <div className="nav-top">
             <Link
               to="/signup"
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-                fontWeight: "normal",
-              }}
+              style={linkStyle}
             >
               <p>SIGN UP</p>
             </Link>
             <Link
               to="/login"
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-                fontWeight: "normal",
-              }}
+              style={linkStyle}
             >
               <p>SIGN IN</p>
             </Link>
