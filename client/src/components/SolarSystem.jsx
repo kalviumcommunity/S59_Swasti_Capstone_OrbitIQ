@@ -27,6 +27,7 @@ const SolarSystem = () => {
 
       renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      containerRef.current.innerHTML = '';
       containerRef.current.appendChild(renderer.domElement);
 
       const sunGeometry = new THREE.SphereGeometry(7, 32, 32);
@@ -134,10 +135,10 @@ const SolarSystem = () => {
 
     window.addEventListener('mousemove', updateCameraPosition);
 
-   
+    
   }, []);
 
-  return <div className="sol" style={{ height: "100vh"}} ref={containerRef} />;
+  return <div className="sol" style={{ height: "100vh", backgroundSize: "cover", backgroundRepeat: 'no-repeat' }} ref={containerRef} />;
 };
 
 export default SolarSystem;
