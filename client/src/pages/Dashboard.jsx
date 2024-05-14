@@ -5,6 +5,8 @@ import SideNav from "../components/SideNavbar";
 import MainDash from "../components/mainDash";
 import Quiz from "../components/Quiz"
 import Facts from "../components/Facts";
+import IntroModule from "../components/introModule";
+// import SolarSystem from "../components/SolarSystem";
 
 export default function Dashboard() {
   const username = sessionStorage.getItem("Username");
@@ -22,6 +24,7 @@ export default function Dashboard() {
         <Route path="/" element={<MainDash username={username} />} />
         <Route path="/quiz" element={<Quiz/>} />
         <Route path="/facts" element={<Facts/>} />
+        <Route path="/intro" element={<IntroModule/>}/>
       </Routes>
       </div>
     </>

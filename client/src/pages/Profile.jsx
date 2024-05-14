@@ -94,6 +94,8 @@ function Profile() {
         const updatedUser = await response.json();
         console.log(updatedUser)
         console.log("updated");
+        toast.success("Password updated successfully")
+        handleClose()
       } else {
         const errorMessage = await response.text();
         toast.error("Failed to update : " + errorMessage);
