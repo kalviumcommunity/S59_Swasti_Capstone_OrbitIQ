@@ -7,6 +7,7 @@ require('dotenv').config();
 
 
 const routes = require('./src/Routes/main.routes');
+const lu_routes = require('./src/Routes/learningUnits.routes')
 const user_routes = require('./src/Routes/authentification.routes');
 const fileUploaded = require('./src/Routes/fileUpload')
 const { connectToDB } = require("./db");
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use('/data', routes);
 app.use('/user', user_routes);
 app.use('/upload', fileUploaded);
+app.use('/learning-unit', lu_routes);
 
 
 const port = 3000;
