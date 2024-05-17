@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Schema = require("../Model/learningUnit_schema")
-const moduleSchema = require("../Model/learningModuleSchema")
+const moduleSchema = require("../Model/module_schema")
 
 router.post('/add-lu/:module_id', async (req, res) => {
     const module_id = req.params.module_id
