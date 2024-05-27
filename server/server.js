@@ -28,7 +28,7 @@ app.use(express.json());
 app.use('/data', routes);
 app.use('/user', user_routes);
 app.use('/upload', fileUploaded);
-app.use('/learning-unit', lu_routes);
+app.use('/learning', lu_routes);
 
 
 const port = 3000;
