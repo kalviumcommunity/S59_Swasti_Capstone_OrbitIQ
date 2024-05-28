@@ -5,7 +5,7 @@ import SideNav from "../components/SideNavbar";
 import MainDash from "../components/mainDash";
 import Quiz from "../components/Quiz"
 import Facts from "../components/Facts";
-import IntroModule from "../components/introModule";
+import IntroModule from "../components/ModuleContent";
 // import SolarSystem from "../components/SolarSystem";
 
 export default function Dashboard() {
@@ -24,7 +24,7 @@ export default function Dashboard() {
         <Route path="/" element={<MainDash username={username} />} />
         <Route path="/quiz" element={<Quiz/>} />
         <Route path="/facts" element={<Facts/>} />
-        <Route path="/intro" element={<IntroModule/>}/>
+        <Route path="/module/:id" element={<IntroModule/>}/>
       </Routes>
       </div>
     </>
