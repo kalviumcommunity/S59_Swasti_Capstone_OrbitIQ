@@ -4,9 +4,15 @@ const router = express.Router();
 const Schema = require("../Model/learningUnit_schema")
 const QuizSchema = require("../Model/quiz_schema")
 const moduleSchema = require("../Model/module_schema");
+const { ValidateLearningModule } = require("../Model/joi_schema")
 
 router.post('/add-lm', async (req, res) => {
+
     try {
+        const { error } = ValidateLearningModule(req.body)
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
         const newModule = new moduleSchema({
             title: req.body.title,
             description: req.body.description,
@@ -17,6 +23,7 @@ router.post('/add-lm', async (req, res) => {
         res.status(201).json(savedLM)
     }
     catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Failed to add LM. Try again later." })
     }
 })
