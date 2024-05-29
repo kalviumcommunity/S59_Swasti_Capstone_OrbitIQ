@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const LearningUnit = require('./learningUnit_schema');
 
 const schema = Joi.object({
   title: Joi.string().required(),
@@ -12,6 +13,15 @@ const UserSchema = Joi.object({
   Image: Joi.string().default('./public/profile-default.png').required()
 })
 
+const LearningModuleSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+  learningUnits: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  ImgUrl: Joi.string().required(),
+  level: Joi.string().required()
+})
+
+
 const ValidateSchema = (input) => {
   return schema.validate(input);
 }
@@ -20,4 +30,8 @@ const ValidateUserSchema = (input) => {
   return UserSchema.validate(input);
 }
 
-module.exports = { ValidateSchema, ValidateUserSchema };
+const ValidateLearningModule = (input) => {
+  return LearningModuleSchema.validate(input);
+}
+
+module.exports = { ValidateSchema, ValidateUserSchema, ValidateLearningModule };

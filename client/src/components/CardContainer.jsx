@@ -1,48 +1,65 @@
-import React from 'react'
-import CardComponent from './CardComponent'
-import module1 from "../assets/galaxy.png"
-import module2 from "../assets/planet.png"
-import module3 from "../assets/astronaut.png"
-import module4 from "../assets/robotic-hand.png"
-import module5 from "../assets/solar-system.png"
-import module6 from "../assets/explorer.png"
-import module7 from "../assets/satellite.png"
-import module8 from "../assets/spaceship.png"
-import { Link } from 'react-router-dom'
-import "../css/Card.css"
+import React, { useEffect, useState } from 'react';
+import CardComponent from './CardComponent';
+import { Link } from 'react-router-dom';
+import "../css/Card.css";
+
+const API_URI = `${import.meta.env.VITE_API_URI}/learning`;
 
 function CardContainer() {
+  const [modules, setModules] = useState([]);
+  const [error, setError] = useState(null);
+
   const linkStyle = {
     textDecoration: "none",
     color: "inherit",
     fontWeight: "normal"
+  };
+
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await fetch(`${API_URI}/module`)
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        const data = await response.json()
+        console.log(data)
+        setModules(data)
+      } catch (error) {
+        setError("Failed to fetch modules")
+      }
+    }
+
+    fetchModules();
+  }, [])
+
+  const renderCards = (level) => {
+    return modules
+      .filter(module => module.level === level)
+      .map((module, index) => (
+        <Link key={index} to={`/dashboard/module/${module._id}`} style={linkStyle}>
+          <CardComponent imgURL={module.ImgUrl} text={module.title} />
+        </Link>
+      ))
   }
-  
+
   return (
     <>
+      {error && <p>{error}</p>}
       <div className='levels'>
-        <h1>Level 1 : Stellar Beginnings</h1>
+        <h1>Level 1: Stellar Beginnings</h1>
         <div className='card-container'>
-          <Link to='/dashboard/intro' style={linkStyle}><CardComponent imgURL={module1} text="Introduction to Outer Space" /></Link>
-          <CardComponent imgURL={module2} text="Exploring Celestial Bodies" />
-          <CardComponent imgURL={module3} text="Space Exploration History" />
-          <CardComponent imgURL={module4} text="Space Technology and Innovations" />
+          {renderCards('Level 1')}
         </div>
       </div>
       <div className='levels'>
-        <h1>Level 2 : Pioneers of Space</h1>
+        <h1>Level 2: Pioneers of Space</h1>
         <div className='card-container'>
-          <CardComponent imgURL={module5} text="Advanced Celestial Mechanics" />
-          <CardComponent imgURL={module6} text="Space Operations and Management" />
-          <CardComponent imgURL={module7} text="Advanced Space Technologies" />
-          <CardComponent imgURL={module8} text="Spacecraft Design and Engineering" />
+          {renderCards('Level 2')}
         </div>
       </div>
-
     </>
-
-
   )
 }
 
-export default CardContainer
+export default CardContainer;
