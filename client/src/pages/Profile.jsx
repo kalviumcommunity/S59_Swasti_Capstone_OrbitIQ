@@ -7,6 +7,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useForm } from "react-hook-form";
 import ImageUpload from '../components/ImageUpload';
 import BackButton from '../components/backButton';
+import Jwtdecode from '../functions/jwtdecode';
 
 
 const API_URI = `${import.meta.env.VITE_API_URI}/user`;
@@ -19,9 +20,10 @@ function Profile() {
     formState: { errors },
   } = useForm();
 
-  const Username = sessionStorage.getItem("Username");
-  const Email = sessionStorage.getItem("Email");
-  const UserId = sessionStorage.getItem("UserId");
+  const userData = Jwtdecode();
+  const Username = userData.Username;
+  const Email = userData.Email;
+  const UserId = userData.UserId;
   const [registeredData, setRegisteredData] = useState({});
   const [isChangePass, setChangePass] = useState(false);
   const [OldPass, setOldPassword] = useState("");
@@ -178,7 +180,7 @@ function Profile() {
       </Dialog>
       <div className='flex-profile-div'>
         <div className='user-img-div'>
-          <ImageUpload userId={UserId}  />
+          <ImageUpload userId={UserId} />
         </div>
         <div className='user-form-update'>
           <form className="form-custom">

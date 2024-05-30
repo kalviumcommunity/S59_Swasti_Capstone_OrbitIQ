@@ -71,7 +71,10 @@ router.get('/google/login/success', async (req, res) => {
       return;
     }
     const user = users[0];
-    res.json({ Username: user.Username, Image: user.Image, Email: user.Email, UserId: user.UserId });
+    const { UserId,Username, Image, Email} = user;
+      const token=jwt.sign({Username,Image,Email,UserId},JWT_SECRET,{expiresIn:'12h'})
+      res.cookie('token',token,{httpOnly:false,secure: true, sameSite: 'None', maxAge: 12 * 60 * 60 * 1000});
+      res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: UserId ,token:token});
   } catch (error) {
     res.status(500).json({ error: "Error retrieving user data: " + error });
   }
@@ -127,10 +130,10 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ Email: Email, Password: Password });
     if (user) {
-      const { Username, Image, Email ,_id} = user;
-      const token=jwt.sign({Username,Image,Email,UserId:_id},JWT_SECRET,{expiresIn:'12h'})
-      res.cookie('token',token,{httpOnly:true});
-      res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: user._id });
+      const { Username, Image, Email} = user;
+      const token=jwt.sign({Username,Image,Email,UserId:user._id},JWT_SECRET,{expiresIn:'12h'})
+      res.cookie('token',token,{httpOnly:false,secure: true, sameSite: 'None', maxAge: 12 * 60 * 60 * 1000});
+      res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: user._id ,token:token});
     }
     else {
       res.status(401).json({ message: "Check your Email and Password" });
@@ -141,6 +144,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
+  res.clearCookie('token',{httpOnly:false,secure:true,sameSite:'None'});
   res.status(200).json({ message: "Logout successful" });
 });
 

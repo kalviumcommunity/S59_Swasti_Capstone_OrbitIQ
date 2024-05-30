@@ -41,19 +41,14 @@ function Login() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ Email: data.email, Password: data.password }),
         credentials: 'include'
       });
 
       if (response.ok) {
-        const { Username, UserId, Email } = await response.json();
+        const { Username, UserId, Email, token } = await response.json();
         toast.success("Authentication successful");
-        sessionStorage.setItem("Username", Username);
-        sessionStorage.setItem("Email", data.email || Email);
-        sessionStorage.setItem("Password", data.password);
-        sessionStorage.setItem("UserId", UserId);
         setTimeout(() => {
           navigate("/dashboard");
         }, 3000);
