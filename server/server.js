@@ -23,9 +23,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+const allowedOrigins = process.env.CORS_ORIGIN_PROD ;
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:5173'
+  origin: allowedOrigins
 }));
 
 app.use(cookieparser());
