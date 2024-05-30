@@ -6,11 +6,14 @@ const { ValidateUserSchema } = require("../Model/joi_schema");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 const GoogleUser = require("../Model/google_user");
+const jwt=require('jsonwebtoken');
+
 
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const URL = process.env.URL;
 const CLIENT_URL=process.env.CLIENT_URL;
+const JWT_SECRET=process.env.JWT_SECRET;
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
@@ -124,7 +127,9 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ Email: Email, Password: Password });
     if (user) {
-      const { Username, Image, Email } = user;
+      const { Username, Image, Email ,_id} = user;
+      const token=jwt.sign({Username,Image,Email,UserId:_id},JWT_SECRET,{expiresIn:'12h'})
+      res.cookie('token',token,{httpOnly:true});
       res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: user._id });
     }
     else {

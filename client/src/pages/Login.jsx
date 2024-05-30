@@ -41,8 +41,10 @@ function Login() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ Email: data.email, Password: data.password }),
+        credentials: 'include'
       });
 
       if (response.ok) {
