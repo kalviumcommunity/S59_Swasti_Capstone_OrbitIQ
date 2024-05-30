@@ -11,16 +11,11 @@ function GoogleLoader() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${API_URI}/google/login/success`);
+                const response = await fetch(`${API_URI}/google/login/success`, {
+                    credentials: 'include'
+                });
                 if (response.ok) {
                     const resp = await response.json();
-                    const { Username, UserId, Email ,Image} = resp
-                    sessionStorage.setItem("Username", Username);
-                    sessionStorage.setItem("Email", Email);
-                    sessionStorage.setItem("UserId", UserId);
-                    sessionStorage.setItem("GoogleImage",Image);
-                    console.log(resp)
-
                 } else {
                     console.error('Failed to fetch google user data');
                 }

@@ -39,17 +39,19 @@ export default function SideNav({ username, userId, email, GoogleImage }) {
       });
   }
   useEffect(() => {
-    getImage();
-  }, [])
+    if (userId) {
+      getImage();
+    }
+  }, [userId]);
 
   const handleLogout = async () => {
     try {
       const response = await fetch(API_URI, {
         method: "POST",
+        credentials: 'include'
       });
       if (response.ok) {
         console.log("Logout successful");
-        sessionStorage.clear();
         setTimeout(() => {
           navigate("/");
         }, 1000);
@@ -78,9 +80,9 @@ export default function SideNav({ username, userId, email, GoogleImage }) {
         </Link>
 
         <Link to="/dashboard/quiz" style={linkStyle}><div className="option-1">
-            <img src={Quiz} alt="quiz" />
-            <p>Quiz</p>
-          </div></Link>
+          <img src={Quiz} alt="quiz" />
+          <p>Quiz</p>
+        </div></Link>
         <Link to="/dashboard/facts" style={linkStyle}>
           <div className="option-1">
             <img src={Funfact} alt="funfact" />
@@ -89,12 +91,12 @@ export default function SideNav({ username, userId, email, GoogleImage }) {
         </Link>
       </div>
       <Link to='/profile' style={linkStyle}><div className="profile-div">
-          <div className="profile-img">
-            <img src={imageURL || GoogleImage} alt="profile" />
-          </div>
-          <h3>{username}</h3>
-          <p>{email}</p>
-        </div></Link>
+        <div className="profile-img">
+          <img src={imageURL || GoogleImage} alt="profile" />
+        </div>
+        <h3>{username}</h3>
+        <p>{email}</p>
+      </div></Link>
       <div className="logout" onClick={handleLogout}>
         <img className="exit" src={Exit} />
       </div>

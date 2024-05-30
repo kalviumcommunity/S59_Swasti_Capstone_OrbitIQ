@@ -5,13 +5,15 @@ import VideoLink from "../assets/space_landing_vid.mp4";
 import LogoIcon from "../assets/Logo-icon.png";
 import DownButton from "../assets/down-btn.png";
 import About from "../components/About.jsx";
+import IsLoggedIn from "../functions/isLoggedIn.jsx";
 
 export default function Landing() {
   const [fadeOut, setFadeOut] = useState(false);
+  const isLogged = IsLoggedIn();
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = 400; 
+      const threshold = 400;
       if (window.scrollY > threshold) {
         setFadeOut(true);
       } else {
@@ -61,18 +63,21 @@ export default function Landing() {
             <source src={VideoLink} type="video/mp4" />
           </video>
           <div className="nav-top">
-            <Link
-              to="/signup"
-              style={linkStyle}
-            >
-              <p>SIGN UP</p>
-            </Link>
-            <Link
-              to="/login"
-              style={linkStyle}
-            >
-              <p>SIGN IN</p>
-            </Link>
+            {isLogged ? (<Link to="/dashboard"
+              style={linkStyle}><p>Dashboard</p></Link>) :
+              (<><Link
+                to="/signup"
+                style={linkStyle}
+              >
+                <p>SIGN UP</p>
+              </Link>
+                <Link
+                  to="/login"
+                  style={linkStyle}
+                >
+                  <p>SIGN IN</p>
+                </Link></>)
+            }
           </div>
           <div className="parent-div-text"></div>
           <div className="text-over-subparent">
