@@ -1,4 +1,5 @@
 const passport = require('passport');
+const bcrypt=require('bcrypt');
 const express = require("express");
 const router = express.Router();
 const User = require("../Model/user_schema");
@@ -130,11 +131,37 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+router.post("/signup", async (req, res) => {
+  const { Username, Email, Password } = req.body;
+  try {
+    const { error } = ValidateUserSchema(req.body)
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+    const exist = await User.findOne({ Email });
+    if (exist) {
+      res.status(400).json({ message: "User already registered" });
+    } else {
+      const hashedPass=await bcrypt.hash(Password,10);
+      const User_Added = new User({
+        Username,
+        Email,
+        Password:hashedPass
+      });
+      const savedUser = await User_Added.save();
+      res.status(201).json({ data: savedUser, message: "User added successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post("/login", async (req, res) => {
   const { Email, Password } = req.body;
   try {
-    const user = await User.findOne({ Email: Email, Password: Password });
-    if (user) {
+    const user = await User.findOne({ Email: Email});
+    if (user && bcrypt.compare(Password,user.Password)) {
       const { Username, Image, Email } = user;
       try {
         token = jwt.sign({ Username, Image, Email, UserId: user._id }, JWT_SECRET, { expiresIn: '12h' })
@@ -157,29 +184,6 @@ router.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 });
 
-router.post("/signup", async (req, res) => {
-  const { Username, Email, Password } = req.body;
-  try {
-    const { error } = ValidateUserSchema(req.body)
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
-    const exist = await User.findOne({ Email });
-    if (exist) {
-      res.status(400).json({ message: "User already registered" });
-    } else {
-      const User_Added = new User({
-        Username,
-        Email,
-        Password
-      });
-      const savedUser = await User_Added.save();
-      res.status(201).json({ data: savedUser, message: "User added successfully" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 
 module.exports = router;
