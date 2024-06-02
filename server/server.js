@@ -24,7 +24,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const allowedOrigins = process.env.CORS_ORIGIN_PROD ;
+const allowedOrigins = process.env.CORS_ORIGIN_DEV ;
 app.use(cors({
   credentials: true,
   origin: allowedOrigins
