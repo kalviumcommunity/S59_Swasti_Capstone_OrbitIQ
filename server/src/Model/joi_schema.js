@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const LearningUnit = require('./learningUnit_schema');
 
 const schema = Joi.object({
   title: Joi.string().required(),
@@ -10,7 +9,7 @@ const UserSchema = Joi.object({
   Username: Joi.string().required(),
   Email: Joi.string().required(),
   Password: Joi.string().required(),
-  Image: Joi.string().default('./public/profile-default.png').required()
+  Image: Joi.string().default('./public/profile-default.png')
 })
 
 const LearningModuleSchema = Joi.object({
