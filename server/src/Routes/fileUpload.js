@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../Model/user_schema");
+const {User} = require("../Model/user_schema");
 const multer = require("multer");
 
 const storage = multer.diskStorage({

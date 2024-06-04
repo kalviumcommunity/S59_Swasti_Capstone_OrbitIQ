@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const LearningUnit = require('./learningUnit_schema');
 
 const schema = Joi.object({
   title: Joi.string().required(),

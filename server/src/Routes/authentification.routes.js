@@ -2,7 +2,7 @@ const passport = require('passport');
 const bcrypt=require('bcrypt');
 const express = require("express");
 const router = express.Router();
-const User = require("../Model/user_schema");
+const {User,hashPassword} = require("../Model/user_schema");
 const { ValidateUserSchema } = require("../Model/joi_schema");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
@@ -143,7 +143,7 @@ router.post("/signup", async (req, res) => {
     if (exist) {
       res.status(400).json({ message: "User already registered" });
     } else {
-      const hashedPass=await bcrypt.hash(Password,10);
+      const hashedPass= hashPassword(Password)
       const User_Added = new User({
         Username,
         Email,
