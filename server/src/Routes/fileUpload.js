@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {User} = require("../Model/user_schema");
+const { User } = require("../Model/user_schema");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -20,6 +20,7 @@ const validateFile = (req, file, nd) => {
 const upload = multer({ storage: storage, validateFile: validateFile });
 const path = require('path');
 
+// Database read route performed 
 router.get("/profileImage/:userId", async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -35,6 +36,7 @@ router.get("/profileImage/:userId", async (req, res) => {
     }
 });
 
+//Database write route performed
 router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, res) => {
     try {
         const userId = req.params.userId;
