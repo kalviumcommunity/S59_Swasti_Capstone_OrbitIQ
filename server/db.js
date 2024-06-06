@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 
 //retry functionality
-const connectRetry=()=>{
+const connectRetry = () => {
   mongoose.connect(process.env.URI, {
-  }).then(()=>{
+  }).then(() => {
     console.log('📦 connected to mongoDB');
-  }).catch((err)=>{
+  }).catch((err) => {
     console.error('❌ error connecting to mongoDB:', err.message);
     console.log('Retrying in 5 seconds...');
     setTimeout(connectRetry, 5000);
@@ -22,7 +22,7 @@ const connectToDB = async () => {
   }
 };
 
-const isConnected = () =>{
+const isConnected = () => {
   return mongoose.connection.readyState === 1;
 }
 
