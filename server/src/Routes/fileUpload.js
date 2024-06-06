@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../Model/user_schema");
 const multer = require("multer");
-const mongoose=require("mongoose")
+const mongoose = require("mongoose")
 
 const storage = multer.diskStorage({
     destination: function (req, file, nd) {
@@ -18,10 +18,10 @@ const validateFile = (req, file, nd) => {
     }
     nd(null, true);
 }
-const limits ={
+const limits = {
     fileSize: 5 * 1024 * 1024
 }
-const upload = multer({ storage: storage, validateFile: validateFile ,limits:limits});
+const upload = multer({ storage: storage, validateFile: validateFile, limits: limits });
 const path = require('path');
 
 // Database read route performed 
