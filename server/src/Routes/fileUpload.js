@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../Model/user_schema");
+const { User } = require("../Model/user_schema");
 const multer = require("multer");
+const mongoose = require("mongoose")
 
 const storage = multer.diskStorage({
     destination: function (req, file, nd) {
@@ -17,11 +18,19 @@ const validateFile = (req, file, nd) => {
     }
     nd(null, true);
 }
-const upload = multer({ storage: storage, validateFile: validateFile });
+const limits = {
+    fileSize: 5 * 1024 * 1024
+}
+const upload = multer({ storage: storage, validateFile: validateFile, limits: limits });
 const path = require('path');
 
+// Database read route performed 
 router.get("/profileImage/:userId", async (req, res) => {
     const userId = req.params.userId;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        console.log('Invalid user ID');
+        return res.status(400).send({ error: 'Invalid user ID' });
+    }
     try {
         const user = await User.findById(userId);
         if (!user) {
@@ -35,9 +44,14 @@ router.get("/profileImage/:userId", async (req, res) => {
     }
 });
 
+//Database write route performed
 router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, res) => {
     try {
         const userId = req.params.userId;
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            console.log('Invalid user ID');
+            return res.status(400).send({ error: 'Invalid user ID' });
+        }
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).send('User not found');
