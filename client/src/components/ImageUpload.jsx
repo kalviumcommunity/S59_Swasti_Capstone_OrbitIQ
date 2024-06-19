@@ -7,8 +7,8 @@ const API_URI = `${import.meta.env.VITE_API_URI}/upload`;
 function ImageUpload() {
     const userData = Jwtdecode();
     const userId = userData.UserId;
+    const UserImage=userData.Image;
     const [file, setFile] = useState();
-    const GoogleImage=sessionStorage.getItem("GoogleImage");
     const [imageURL, setImageURL] = useState(null);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ function ImageUpload() {
 
     return (
         <div className='profile-user-change'>
-            {imageURL ? <img src={imageURL} alt="Uploaded" />:<img src={GoogleImage} alt="Uploaded" />}
+            {imageURL ? <img src={imageURL} alt="Uploaded" />:<img src={UserImage} alt="UserImage" />}
             <input type="file" onChange={(e) => setFile(e.target.files[0])} />
             <Button className='Edit-button' variant='contained' startIcon={<i className='bx bx-edit'></i>} onClick={uploadImage}>Change Profile</Button>
         </div>

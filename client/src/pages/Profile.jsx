@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../css/Profile.css"
+import "../css/Profile.css";
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useForm } from "react-hook-form";
 import ImageUpload from '../components/ImageUpload';
 import BackButton from '../components/backButton';
 import Jwtdecode from '../functions/jwtdecode';
-
+import Cookies from 'js-cookie';
 
 const API_URI = `${import.meta.env.VITE_API_URI}/user`;
 
@@ -24,20 +24,24 @@ function Profile() {
   const Username = userData.Username;
   const Email = userData.Email;
   const UserId = userData.UserId;
-  const [registeredData, setRegisteredData] = useState({});
   const [isChangePass, setChangePass] = useState(false);
+  const [isDeleteConfirm, setDeleteConfirm] = useState(false);
   const [OldPass, setOldPassword] = useState("");
   const [isVerified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [newUsername, setNewUsername] = useState("");
+
   const handleClose = () => {
     setChangePass(false);
     setVerified(false);
-  }
+  };
 
-  const checkVerified = async () => {
-    console.log(OldPass)
+  const handleDeleteClose = () => {
+    setDeleteConfirm(false);
+    setVerified(false);
+  };
+
+  const checkVerified = async (callback) => {
     try {
       const response = await fetch(`${API_URI}/checkpassword/${UserId}`, {
         method: "POST",
@@ -46,15 +50,13 @@ function Profile() {
         },
         body: JSON.stringify({ OldPass }),
       });
-      console.log(response)
       if (response.ok) {
         const data = await response.json();
-        console.log(data)
         const { isPasswordMatch } = data;
         if (isPasswordMatch) {
           setVerified(true);
           setError("");
-          handleSubmit(onSubmit)();
+          callback();
         } else {
           setVerified(false);
           setError("Incorrect password");
@@ -62,26 +64,24 @@ function Profile() {
       } else {
         const errorMessage = await response.text();
         toast.error("Failed to verify password: " + errorMessage);
-        console.error("Error:", errorMessage);
       }
     } catch (error) {
       toast.error("An error occurred while verifying password: " + error.message);
-      console.error("Error:", error);
-    }
-  }
-
-  const onSubmit = async (data) => {
-    setRegisteredData(data);
-    console.log(data);
-    if (isVerified) {
-      handleUpdate(UserId);
     }
   };
 
-  const handleUpdate = async (id) => {
+  const onSubmit = async (data) => {
+    if (isVerified) {
+      handleUpdate(UserId, data.password);
+    } else {
+      toast.error("Password verification is required before updating.");
+    }
+  };
+
+  const handleUpdate = async (id, newPassword) => {
     try {
       const updatedObj = {
-        Password: registeredData.password,
+        Password: newPassword,
       };
 
       const response = await fetch(`${API_URI}/changeUserData/${id}`, {
@@ -93,21 +93,40 @@ function Profile() {
       });
 
       if (response.ok) {
-        const updatedUser = await response.json();
-        console.log(updatedUser)
-        console.log("updated");
-        toast.success("Password updated successfully")
-        handleClose()
+        toast.success("Password updated successfully");
+        handleClose();
       } else {
         const errorMessage = await response.text();
-        toast.error("Failed to update : " + errorMessage);
-        console.error("Error:", errorMessage);
+        toast.error("Failed to update: " + errorMessage);
       }
     } catch (error) {
       toast.error("An error occurred while updating: " + error.message);
-      console.error("Error:", error);
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${API_URI}/deleteUser/${UserId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast.success("Account deleted successfully");
+        Cookies.remove('token');
+        window.location.href = "/signup";
+      } else {
+        const errorMessage = await response.text();
+        toast.error("Failed to delete account: " + errorMessage);
+      }
+    } catch (error) {
+      toast.error("An error occurred while deleting account: " + error.message);
+    }
+  };
+
+  const handleDeleteConfirmation = () => {
+    checkVerified(handleDelete);
+  };
+
   return (
     <div className='parent-profile-div'>
       <Dialog open={isChangePass} onClose={handleClose}>
@@ -124,7 +143,7 @@ function Profile() {
                     <InputAdornment position="end">
                       {!isVerified ? <Button
                         style={{ minWidth: '0' }}
-                        onClick={checkVerified}
+                        onClick={() => checkVerified(() => { })}
                       >
                         Verify
                       </Button> : <><Typography color="green">Verified</Typography><CheckCircleOutlineIcon style={{ color: 'green', marginLeft: '3px' }} /></>}
@@ -143,10 +162,7 @@ function Profile() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 disabled={!isVerified}
                 {...register("password", {
-                  required: true,
-                  // pattern: /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                  // minLength: 10,
-                  // maxLength: 20,
+                  required: "New password is required",
                 })}
               />
               {errors.password && (
@@ -161,20 +177,40 @@ function Profile() {
                 type="password"
                 disabled={!isVerified}
                 {...register("confirmpassword", {
-                  required: true,
-                  validate: (value) => value === watch("password"),
+                  required: "Confirm password is required",
+                  validate: (value) => value === watch("password") || "Passwords do not match",
                 })}
-
               />
               {errors.confirmpassword && (
                 <div className="error">
-                  <p>{errors.confirmpassword.message}</p>
-                </div>)}
+                  <Typography color="error">{errors.confirmpassword.message}</Typography>
+                </div>
+              )}
             </div>
             <DialogActions>
               <Button type='submit' variant='contained' disabled={!isVerified}>Change Password</Button>
             </DialogActions>
-
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={isDeleteConfirm} onClose={handleDeleteClose}>
+        <DialogContent>
+          <DialogTitle>Delete your Account</DialogTitle>
+          <Typography>Are you sure you want to delete your account? This action cannot be undone.</Typography>
+          <form className="form-custom">
+            <div>
+              <TextField sx={{ marginTop: "20px", width: '520px' }}
+                label="Verify Your Password"
+                type="password"
+                onChange={(e) => setOldPassword(e.target.value)}
+                required
+              />
+              {error && <Typography color="error">{error}</Typography>}
+            </div>
+            <DialogActions>
+              <Button onClick={handleDeleteClose} variant="outlined">Cancel</Button>
+              <Button onClick={handleDeleteConfirmation} variant="contained" color="error">Delete Account</Button>
+            </DialogActions>
           </form>
         </DialogContent>
       </Dialog>
@@ -204,10 +240,10 @@ function Profile() {
             </div>
             <div className='button-save-update'>
               <Button onClick={() => setChangePass(true)} variant='outlined'>Change Password</Button>
+              <Button onClick={() => setDeleteConfirm(true)} variant='outlined' color='error'>Delete Account</Button>
               <BackButton />
             </div>
           </form>
-
         </div>
       </div>
       <ToastContainer />
