@@ -1,9 +1,12 @@
 import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import Jwtdecode from '../functions/jwtdecode';
 
 const API_URI = `${import.meta.env.VITE_API_URI}/upload`;
 
-function ImageUpload({ userId }) {
+function ImageUpload() {
+    const userData = Jwtdecode();
+    const userId = userData.UserId;
     const [file, setFile] = useState();
     const GoogleImage=sessionStorage.getItem("GoogleImage");
     const [imageURL, setImageURL] = useState(null);
