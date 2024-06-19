@@ -36,8 +36,10 @@ function SignUp() {
 
   const onSubmit = async (data) => {
     setRegisteredData(data);
-    console.log(data);
+    console.log("Form data:", data);
+  
     try {
+      console.log("Making fetch request to:", `${API_URI}/signup`);
       const response = await fetch(`${API_URI}/signup`, {
         method: "POST",
         headers: {
@@ -45,21 +47,26 @@ function SignUp() {
         },
         body: JSON.stringify({ Username: data.name, Email: data.email, Password: data.password }),
       });
+  
+      console.log("Fetch request completed with status:", response.status);
       if (response.ok) {
-        console.log("Registered successful");
-        toast.success("Registration Successful !")
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
+        const responseData = await response.json();
+        console.log("Response data:", responseData);
+  
+        const redirectUrl = responseData.redirectUrl;
+        console.log("Redirecting to:", `${API_URI}/${redirectUrl}`);
+        window.location.href = `${API_URI}/${redirectUrl}`;
       } else {
-        console.error("Registration failed");
-        toast.error("User Already registered")
-
+        console.error("Registration failed with status:", response.status);
+        const errorData = await response.json();
+        console.error("Error data:", errorData);
+        toast.error(errorData.message || "User already registered");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Error during registration:", error);
     }
   };
+  
 
   return (
     <>
