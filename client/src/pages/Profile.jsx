@@ -80,7 +80,6 @@ function Profile() {
 
   const handleUpdate = async (id, newPassword) => {
     try {
-      console.log(newPassword)
       const updatedObj = {
         Password: newPassword,
       };
@@ -94,7 +93,6 @@ function Profile() {
       });
 
       if (response.ok) {
-        console.log(response.json());
         toast.success("Password updated successfully");
         handleClose();
       } else {

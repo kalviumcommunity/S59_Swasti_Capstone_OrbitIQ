@@ -121,7 +121,7 @@ router.patch("/changeUserData/:id", async (req, res) => {
     const hashedPass = await hashPassword(Password);
     user.Password = hashedPass;
     await user.save();
-    console.log(temp, "-->", Password, "which is", user.Password);
+    console.log(temp, "-->", user.Password);
     res.status(200).json(user);
   } catch (err) {
     res.status(500).send("Error: " + err);
