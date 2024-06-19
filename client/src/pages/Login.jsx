@@ -47,13 +47,14 @@ function Login() {
       });
 
       if (response.ok) {
-        const { Username, UserId, Email, token } = await response.json();
-        toast.success("Authentication successful");
+        const { message } = await response.json();
+        toast.success(message);
         setTimeout(() => {
           navigate("/dashboard");
         }, 3000);
       } else {
-        toast.error("Invalid username and password");
+        const { message } = await response.json();
+        toast.error(message);
         console.error("Login failed");
       }
     } catch (error) {
