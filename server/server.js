@@ -13,6 +13,8 @@ const lu_routes = require('./src/Routes/learningUnits.routes')
 const user_routes = require('./src/Routes/authentification.routes');
 const fileUploaded = require('./src/Routes/fileUpload')
 const { connectToDB } = require("./db");
+const scheduleAPODEmails=require('./src/utils/scheduleCronjob')
+
 connectToDB();
 
 app.set('view engine', 'ejs');
@@ -40,6 +42,7 @@ app.use('/data', routes);
 app.use('/user', user_routes);
 app.use('/upload', fileUploaded);
 app.use('/learning', lu_routes);
+scheduleAPODEmails();
 
 
 const port = 3000;
