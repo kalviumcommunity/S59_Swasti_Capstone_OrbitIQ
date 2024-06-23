@@ -4,6 +4,7 @@ const passport = require("passport");
 const cookieparser = require("cookie-parser");
 const session = require("express-session");
 const app = express();
+const path=require("path");
 require('dotenv').config();
 
 
@@ -14,6 +15,9 @@ const fileUploaded = require('./src/Routes/fileUpload')
 const { connectToDB } = require("./db");
 connectToDB();
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname + '/src', 'views'));
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

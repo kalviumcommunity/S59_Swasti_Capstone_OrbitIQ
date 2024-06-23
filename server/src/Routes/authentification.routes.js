@@ -10,6 +10,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 const GoogleUser = require("../Model/google_user");
 const jwt = require('jsonwebtoken');
+const sendOTPEmail=require("../controllers/send-otp")
 
 
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
@@ -154,10 +155,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post("/verifyOTP/:id", async (req, res) => {
+  const userId=req.params.id;
+  const Otp = req.body.otp
+
+  try {
+      const user = await User.findById(userId);
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      if (Otp===user.Otp) {
+          user.Verify = true;
+          user.Otp = null;
+          await user.save();
+          res.redirect(`${CLIENT_URL}/login`);
+      } else {
+        return res.status(400).render('verify-otp', { userId, error: 'Invalid OTP' });
+      }
+  } catch (error) {
+      console.error('Error verifying OTP:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 router.post("/signup", async (req, res) => {
   const { Username, Email, Password } = req.body;
-  console.log("user entered/signup", Password);
   try {
     const { error } = ValidateUserSchema(req.body)
     if (error) {
@@ -167,18 +191,35 @@ router.post("/signup", async (req, res) => {
     if (exist) {
       res.status(400).json({ message: "User already registered" });
     } else {
+      const otp = Math.floor(100000 + Math.random() * 900000);
       const hashedPass = await hashPassword(Password)
-      console.log("userhassed /signup", hashedPass);
+      
       const User_Added = new User({
         Username,
         Email,
-        Password: hashedPass
+        Password: hashedPass,
+        Otp: otp
       });
       const savedUser = await User_Added.save();
-      res.status(201).json({ data: savedUser, message: "User added successfully" });
+      console.log(savedUser)
+      await sendOTPEmail(Email, otp);
+      res.status(201).json({ userId: savedUser._id, redirectUrl: `verify-otp-bymail?userId=${savedUser._id}` });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/verify-otp-bymail', async (req, res) => {
+  const userId = req.query.userId;
+  try {
+      const user = await User.findById(userId);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      res.render('verify-otp', { userId });
+  } catch (error) {
+      res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -189,6 +230,9 @@ router.post("/login", async (req, res) => {
     if (!user) {
       console.log("User not found")
       return res.status(404).json({ message: "User not found" })
+    }
+    if(!user.Verify){
+      return res.status(401).json({ message: "User not verified" })
     }
     const isMatch = await bcrypt.compare(Password, user.Password)
     if (!isMatch) {
@@ -209,7 +253,6 @@ router.post("/logout", (req, res) => {
   res.clearCookie('token', { httpOnly: false, secure: true, sameSite: 'Lax' });
   res.status(200).json({ message: "Logout successful" });
 });
-
 
 
 module.exports = router;

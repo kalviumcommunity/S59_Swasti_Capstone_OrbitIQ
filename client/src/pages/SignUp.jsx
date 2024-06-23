@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/Signup.css";
@@ -10,14 +10,43 @@ import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
-import { useForm } from "react-hook-form";
+import GoogleButton from "react-google-button";
+import { Modal, Box, CircularProgress } from "@mui/material";
 import ErrorImage from "../assets/error.png";
 import Slider1 from "../assets/Slider1.png";
 import Logo_white from "../assets/Logo-white.png";
-import { Link } from "react-router-dom";
-import GoogleButton from "react-google-button";
 
-const API_URI = `${import.meta.env.VITE_API_URI}/user`
+const API_URI = `${import.meta.env.VITE_API_URI}/user`;
+
+const Popup = ({ open }) => (
+  <Modal
+    open={open}
+    aria-labelledby="sending-otp-modal-title"
+    aria-describedby="sending-otp-modal-description"
+  >
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: 300,
+        bgcolor: "background.paper",
+        border: "2px solid #000",
+        boxShadow: 24,
+        p: 4,
+        textAlign: "center",
+        borderRadius: 2,
+      }}
+    >
+      <Typography id="sending-otp-modal-description" sx={{ mt: 2, color: "#429477" }}>
+        OTP Sending for Verification
+      </Typography>
+
+      <CircularProgress />
+    </Box>
+  </Modal>
+);
 
 function SignUp() {
   const navigate = useNavigate();
@@ -28,36 +57,51 @@ function SignUp() {
     formState: { errors },
   } = useForm();
   const [registeredData, setRegisteredData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleGoogleLogin = () => {
-    window.open(`${API_URI}/google`,
-      "_self")
-  }
+    window.open(`${API_URI}/google`, "_self");
+  };
 
   const onSubmit = async (data) => {
     setRegisteredData(data);
-    console.log(data);
+    console.log("Form data:", data);
+    setLoading(true);
+
     try {
+      console.log("Making fetch request to:", `${API_URI}/signup`);
       const response = await fetch(`${API_URI}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Username: data.name, Email: data.email, Password: data.password }),
+        body: JSON.stringify({
+          Username: data.name,
+          Email: data.email,
+          Password: data.password,
+        }),
       });
-      if (response.ok) {
-        console.log("Registered successful");
-        toast.success("Registration Successful !")
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
-      } else {
-        console.error("Registration failed");
-        toast.error("User Already registered")
 
+      console.log("Fetch request completed with status:", response.status);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Response data:", responseData);
+
+        const redirectUrl = responseData.redirectUrl;
+        console.log("Redirecting to:", `${API_URI}/${redirectUrl}`);
+        setTimeout(() => {
+          window.location.href = `${API_URI}/${redirectUrl}`;
+        }, 1000);
+      } else {
+        console.error("Registration failed with status:", response.status);
+        const errorData = await response.json();
+        console.error("Error data:", errorData);
+        toast.error(errorData.message || "User already registered");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Error during registration:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -199,7 +243,11 @@ function SignUp() {
                 <p className="login">or I’m already a member</p>
               </Link>
             </div>
-            <GoogleButton className="align-center-google" label="Sign up with google" onClick={handleGoogleLogin} />
+            <GoogleButton
+              className="align-center-google"
+              label="Sign up with google"
+              onClick={handleGoogleLogin}
+            />
           </form>
         </div>
         <div className="sub-div-two-sign">
@@ -218,6 +266,7 @@ function SignUp() {
           </div>
         </div>
       </div>
+      <Popup open={loading}/>
       <ToastContainer />
     </>
   );
