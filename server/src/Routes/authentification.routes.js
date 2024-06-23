@@ -165,14 +165,13 @@ router.post("/verifyOTP/:id", async (req, res) => {
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
       }
-      console.log(Otp, user.Otp)
-      if (Otp==user.Otp) {
+      if (Otp===user.Otp) {
           user.Verify = true;
           user.Otp = null;
           await user.save();
           res.redirect(`${CLIENT_URL}/login`);
       } else {
-          return res.status(400).json({ message: 'Invalid OTP' });
+        return res.status(400).render('verify-otp', { userId, error: 'Invalid OTP' });
       }
   } catch (error) {
       console.error('Error verifying OTP:', error);
@@ -181,11 +180,8 @@ router.post("/verifyOTP/:id", async (req, res) => {
 });
 
 
-
-
 router.post("/signup", async (req, res) => {
   const { Username, Email, Password } = req.body;
-  console.log("user entered/signup", Password);
   try {
     const { error } = ValidateUserSchema(req.body)
     if (error) {
@@ -257,13 +253,6 @@ router.post("/logout", (req, res) => {
   res.clearCookie('token', { httpOnly: false, secure: true, sameSite: 'Lax' });
   res.status(200).json({ message: "Logout successful" });
 });
-
-
-
-
-
-
-
 
 
 module.exports = router;
