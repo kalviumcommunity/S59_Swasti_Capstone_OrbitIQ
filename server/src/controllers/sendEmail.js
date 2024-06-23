@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const sendAPODEmail = async (user, apodData) => {
   const mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.WEB_MAILID,
     to: user.Email,
     subject: 'NASA Astronomy Picture of the Day',
     html: `

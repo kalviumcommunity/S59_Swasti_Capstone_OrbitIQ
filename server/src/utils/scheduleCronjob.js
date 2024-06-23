@@ -15,7 +15,7 @@ const scheduleAPODEmails = () => {
 
       console.log(`APOD emails sent to all users.`);
     } catch (error) {
-      console.error('Error scheduling APOD emails:', error);
+      console.error('Error scheduling APOD emails:', error.message);
     }
   });
 };
