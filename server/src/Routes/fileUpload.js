@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../Model/user_schema");
 const multer = require("multer");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const rateLimit = require('express-rate-limit');
+const redisClient = require('../utils/redisClient');
+const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, nd) {
@@ -23,14 +25,13 @@ const limits = {
     fileSize: 5 * 1024 * 1024
 }
 const upload = multer({ storage: storage, validateFile: validateFile, limits: limits });
-const path = require('path');
 const limiter = rateLimit({
     windowMs: 7 * 24 * 60 * 60 * 1000,
     max: 2,
-    message: 'You can can change image twice a week. Try again after a week.'
+    message: 'You can change image twice a week. Try again after a week.'
 });
 
-// Database read route performed 
+// Database read route performed with Redis cache
 router.get("/profileImage/:userId", async (req, res) => {
     const userId = req.params.userId;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -38,11 +39,17 @@ router.get("/profileImage/:userId", async (req, res) => {
         return res.status(400).send({ error: 'Invalid user ID' });
     }
     try {
+        const cachedImage = await redisClient.get(`user:${userId}:image`);
+        if (cachedImage) {
+            console.log('Sending cached image from Redis:', cachedImage);
+            return res.sendFile(path.resolve(cachedImage));
+        }
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).send('User not found');
         }
-        const imagePath = path.resolve(__dirname, '..', '..', user.Image);
+        const imagePath = path.resolve(__dirname, '..', '..', 'public', 'UploadedImages', user.Image);
+        await redisClient.set(`user:${userId}:image`, imagePath, 'EX', 60 * 60 * 24);
         res.sendFile(imagePath);
     } catch (error) {
         console.error(error);
@@ -50,7 +57,7 @@ router.get("/profileImage/:userId", async (req, res) => {
     }
 });
 
-//Database write route performed
+// Database write route performed
 router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -64,6 +71,7 @@ router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), asyn
         }
         user.Image = req.file.path;
         await user.save();
+        await redisClient.set(`user:${userId}:image`, req.file.path, 'EX', 60 * 60 * 24);
         res.json(user);
     } catch (error) {
         if (error.name === 'RateLimitError') {
