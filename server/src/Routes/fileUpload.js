@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../Model/user_schema");
 const multer = require("multer");
 const mongoose = require("mongoose")
+const rateLimit = require('express-rate-limit');
 
 const storage = multer.diskStorage({
     destination: function (req, file, nd) {
@@ -23,6 +24,11 @@ const limits = {
 }
 const upload = multer({ storage: storage, validateFile: validateFile, limits: limits });
 const path = require('path');
+const limiter = rateLimit({
+    windowMs: 7 * 24 * 60 * 60 * 1000,
+    max: 2,
+    message: 'You can can change image twice a week. Try again after a week.'
+});
 
 // Database read route performed 
 router.get("/profileImage/:userId", async (req, res) => {
@@ -45,7 +51,7 @@ router.get("/profileImage/:userId", async (req, res) => {
 });
 
 //Database write route performed
-router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, res) => {
+router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), async (req, res) => {
     try {
         const userId = req.params.userId;
         if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -60,8 +66,13 @@ router.patch("/updateProfileImage/:userId", upload.single('file'), async (req, r
         await user.save();
         res.json(user);
     } catch (error) {
-        console.error(`File can't be uploaded:` + error);
-        res.status(500).send('Internal Server Error:' + error);
+        if (error.name === 'RateLimitError') {
+            console.log('Rate limit exceeded:', error);
+            res.status(429).send('Too many requests, please try again later.');
+        } else {
+            console.log(`File can't be uploaded:`, error);
+            res.status(500).send(`Internal Server Error: ${error}`);
+        }
     }
 });
 
