@@ -59,8 +59,8 @@ router.get("/profileImage/:userId", async (req, res) => {
 
 // Database write route performed
 router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), async (req, res) => {
+    const userId = req.params.userId;
     try {
-        const userId = req.params.userId;
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             console.log('Invalid user ID');
             return res.status(400).send({ error: 'Invalid user ID' });
@@ -69,6 +69,7 @@ router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), asyn
         if (!user) {
             return res.status(404).send('User not found');
         }
+        const currentImage=user.Image;
         user.Image = req.file.path;
         await user.save();
         await redisClient.set(`user:${userId}:image`, req.file.path, 'EX', 60 * 60 * 24);
@@ -77,9 +78,19 @@ router.patch("/updateProfileImage/:userId", limiter, upload.single('file'), asyn
         if (error.name === 'RateLimitError') {
             console.log('Rate limit exceeded:', error);
             res.status(429).send('Too many requests, please try again later.');
+        } else if (error.name === 'MongoError') {
+            console.log('MongoDB error:', error);
+            res.status(500).send('Database error. Please try again later.');
+        } else if (error.name === 'MulterError') {
+            console.log('Multer error:', error);
+            res.status(400).send('File upload error. Please upload a valid file.');
         } else {
-            console.log(`File can't be uploaded:`, error);
-            res.status(500).send(`Internal Server Error: ${error}`);
+            console.log('Unknown error:', error);
+            res.status(500).send(`Internal Server Error: ${error.message}`);
+        }
+        
+        if(currentImage){
+            await redisClient.set(`user:${userId}:image`, currentImage, 'EX', 60 * 60 * 24);
         }
     }
 });
