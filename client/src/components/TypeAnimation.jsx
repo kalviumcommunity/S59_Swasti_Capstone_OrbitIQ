@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
+import DOMPurify from 'dompurify';
 
 const Typewriter = ({ text, delay }) => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHTML, setIsHTML] = useState(false); // State to track if content is HTML
+  const [isHTML, setIsHTML] = useState(false);
 
   useEffect(() => {
-    // Check if text is HTML
     setIsHTML(text.startsWith("<"));
 
     if (currentIndex < text.length) {
@@ -19,10 +19,12 @@ const Typewriter = ({ text, delay }) => {
     }
   }, [currentIndex, delay, text]);
 
+  const sanitized= isHTML ? DOMPurify.sanitize(currentText) : currentText;
+
   return (
     <>
       {isHTML ? (
-        <span dangerouslySetInnerHTML={{ __html: currentText }} />
+        <span dangerouslySetInnerHTML={{ __html: sanitized}} />
       ) : (
         <span>{currentText}</span>
       )}
