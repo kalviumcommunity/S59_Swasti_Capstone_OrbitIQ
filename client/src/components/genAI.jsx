@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../css/GenAi.css"
 import Typewriter from './TypeAnimation';
+import {marked} from 'marked';
 
 const API_URI = `${import.meta.env.VITE_API_URI}/genai`;
 
@@ -18,36 +19,39 @@ const App = () => {
       };
 
       const res = await fetch(`${API_URI}/google-genai`, requestOptions);
+
       if (!res.ok) {
         throw new Error('Network response was not ok');
       }
+      
       const data = await res.json();
-      setResponse(data.response)
-      setError(null);
+      const htmlResponse = marked(data.response);
+      setResponse(htmlResponse);
+      setError(null); // Reset error state on success
     } catch (error) {
       console.error('Error asking question:', error);
-      setError(error.message);
+      setError(error.message); // Set error state for UI feedback
     }
   };
 
   return (
     <div className="app-container">
-      <div className="input-container">
-        <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
-        <button onClick={handleAskQuestion}>Ask</button>
-      </div>
-
-      {response && (
-        <div className="response-container">
-          <div
-            className="markdown-response"
-          />
-          <Typewriter text={response} delay={10} />
-        </div>
-      )}
-
-      {error && <div className="error">{error}</div>}
+    <div className="input-container">
+      <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
+      <button onClick={handleAskQuestion}>Ask</button>
     </div>
+    
+    {response && (
+      <div className="response-container">
+        <div
+      className="markdown-response"
+    />
+    <Typewriter text={response} delay={10}/>
+      </div>
+    )}
+
+    {error && <div className="error">{error}</div>}
+  </div>
   );
 };
 
