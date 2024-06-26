@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import "./App.css";
 import Profile from "./pages/Profile";
 import GoogleLoader from "./components/GoogleLoader";
+import GenAI from "./components/genAI";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/dashboard/*" element={<Dashboard/>}/>
         <Route path="/profile" element={<Profile/>} />
         <Route path="/google/success" element={<GoogleLoader/>}/>
+        <Route path="/generative-ai" element={<GenAI/>}/>
       </Routes>
     </>
   );

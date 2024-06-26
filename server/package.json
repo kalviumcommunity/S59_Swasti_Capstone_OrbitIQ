@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/core": "^0.2.9",
+    "@langchain/google-genai": "^0.0.21",
     "async-redis": "^2.0.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
