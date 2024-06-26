@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../css/GenAi.css"
 import Typewriter from './TypeAnimation';
+import { marked } from 'marked';
 
 const API_URI = `${import.meta.env.VITE_API_URI}/genai`;
 
@@ -18,11 +19,14 @@ const App = () => {
       };
 
       const res = await fetch(`${API_URI}/google-genai`, requestOptions);
+
       if (!res.ok) {
         throw new Error('Network response was not ok');
       }
+
       const data = await res.json();
-      setResponse(data.response)
+      const htmlResponse = marked(data.response);
+      setResponse(htmlResponse);
       setError(null);
     } catch (error) {
       console.error('Error asking question:', error);
