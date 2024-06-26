@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import LunaAI from "../assets/chat.png"
 import "../css/Landing.css";
 import VideoLink from "../assets/space_landing_vid.mp4";
 import LogoIcon from "../assets/Logo-icon.png";
@@ -88,6 +89,7 @@ export default function Landing() {
           </div>
         </div>
       </div>
+      <Link to="/generative-ai"><div className="ai-bot"><img src={LunaAI} alt="Luna AI"/></div></Link>
       <About />
     </>
   );

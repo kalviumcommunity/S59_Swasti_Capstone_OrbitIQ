@@ -19,11 +19,9 @@
 
 .sub-div-one {
   background: rgb(0, 2, 111);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 2, 111, 1) 0%,
-    rgba(0, 1, 55, 1) 33%
-  );
+  background: linear-gradient(0deg,
+      rgba(0, 2, 111, 1) 0%,
+      rgba(0, 1, 55, 1) 33%);
   min-width: 55%;
 }
 
@@ -80,6 +78,7 @@
   border-radius: 6px;
   padding: 13px 26px 13px 26px;
   cursor: pointer;
+
   &:hover {
     background-color: var(--secondary-color);
     font-weight: bold;
@@ -132,10 +131,12 @@
 }
 
 @keyframes upAndDown {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -169,4 +170,23 @@
 
 .fade-out {
   opacity: 0;
+}
+
+.ai-bot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #000137;
+  color: #000137;
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
+
+.ai-bot img {
+  height: 80px;
 }
