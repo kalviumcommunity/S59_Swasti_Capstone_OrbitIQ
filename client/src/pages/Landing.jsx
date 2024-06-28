@@ -89,7 +89,6 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <Link to="/generative-ai"><div className="ai-bot"><img src={LunaAI} alt="Luna AI"/></div></Link>
       <About />
     </>
   );

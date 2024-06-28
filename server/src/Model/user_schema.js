@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
       },
-      Otp: {
+    Otp: {
         type: String,
     }
 });
