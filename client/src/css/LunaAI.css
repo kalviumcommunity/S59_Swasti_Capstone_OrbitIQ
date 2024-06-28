@@ -1,1 +1,43 @@
-/* css for LunaAI*/
+
+.align-center-ai-bot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.align-center-ai-bot img {
+    height: 150px;
+}
+
+.lunaai-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+}
+
+.lunaai-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.lunaai-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.lunaai-message {
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 70%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.lunaai-message span {
+    display: block;
+}
