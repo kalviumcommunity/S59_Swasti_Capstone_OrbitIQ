@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../css/GenAi.css"
 import Typewriter from './TypeAnimation';
 import {marked} from 'marked';
+import LunaAI from './LunaAI';
 
 const API_URI = `${import.meta.env.VITE_API_URI}/genai`;
 
@@ -27,10 +28,10 @@ const App = () => {
       const data = await res.json();
       const htmlResponse = marked(data.response);
       setResponse(htmlResponse);
-      setError(null); // Reset error state on success
+      setError(null);
     } catch (error) {
       console.error('Error asking question:', error);
-      setError(error.message); // Set error state for UI feedback
+      setError(error.message);
     }
   };
 
@@ -46,7 +47,7 @@ const App = () => {
         <div
       className="markdown-response"
     />
-    <Typewriter text={response} delay={10}/>
+    <LunaAI response={<Typewriter text={response} delay={10} />}/>
       </div>
     )}
 

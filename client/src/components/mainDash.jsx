@@ -3,6 +3,8 @@ import MagnifyingGlass from "../assets/magnifying-glass.png";
 import Bell from "../assets/bell.png";
 import Slider1 from "../assets/Slider1.png";
 import CardContainer from "./CardContainer";
+import LunaAI from "../assets/chat.png"
+import { Link } from 'react-router-dom';
 
 function mainDash({username}) {
   return (
@@ -29,6 +31,7 @@ function mainDash({username}) {
           <img src={Slider1} />
         </div>
         <CardContainer />
+        <Link to="/generative-ai"><div className="ai-bot"><img src={LunaAI} alt="Luna AI"/></div></Link>
       </div>
   )
 }
