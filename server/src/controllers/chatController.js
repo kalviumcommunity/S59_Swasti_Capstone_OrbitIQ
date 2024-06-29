@@ -8,10 +8,13 @@ async function handleChatCompletion(req, res) {
     const completion = await createChatCompletion(messages);
     res.json(completion);
   } catch (error) {
-    if(error.response.status === 429){
-      res.status(429).json({error:"rate limit exceeded"})
+    if (error.name === 'RateLimitError') {
+      console.log('Rate limit exceeded:', error);
+      res.status(429).send('Too many requests, please try again later.');
     }
-    res.status(500).json({ error: 'Failed to create chat completion' });
+    else{
+      res.status(500).json({ error: 'Failed to create chat completion' });
+    }
   }
 }
 
