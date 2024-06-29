@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const { User } = require("../src/Model/user_schema");
 require('dotenv').config();
 
+const USER_TEST_USERNAME=process.env.USER_TEST_USERNAME;
+const USER_TEST_PASS=process.env.USER_TEST_PASS;
+const USER_TEST_EMAIL=process.env.USER_TEST_EMAIL;
+const NOT_USER_EMAIL=process.env.NOT_USER_EMAIL;
+
 beforeAll(async () => {
     await mongoose.connect(process.env.TEST_URI);
 });
@@ -17,7 +22,7 @@ describe('User Registration', () => {
     it('should create a new user when valid data is provided', async () => {
         const response = await request(app)
             .post('/user/signup')
-            .send({ Username: 'testuser', Email: 'test@example.com', Password: 'testpassword' })
+            .send({ Username: USER_TEST_USERNAME, Email: USER_TEST_EMAIL, Password: USER_TEST_PASS })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(201);
@@ -42,12 +47,12 @@ describe('User Login', () => {
     it('should log in a user with valid credentials', async () => {
         const response = await request(app)
             .post('/user/login')
-            .send({ Email: 'test@example.com', Password: 'testpassword' })
+            .send({ Email: USER_TEST_EMAIL, Password: USER_TEST_PASS })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/);
 
         if (response.status === 200) {
-            except(response.body).toHaveProperty('message', "Login successful")
+            expect(response.body).toHaveProperty('message', "Login successful")
             expect(response.body).toHaveProperty('token');
             expect(response.body).toHaveProperty('Username');
             expect(response.body).toHaveProperty('Email');
@@ -59,7 +64,7 @@ describe('User Login', () => {
     it('should return 404 Not Found if user does not exist', async () => {
         const response = await request(app)
             .post('/user/login')
-            .send({ Email: 'nonexistent@example.com', Password: 'testpassword' })
+            .send({ Email: NOT_USER_EMAIL, Password: USER_TEST_PASS })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(404);
@@ -73,9 +78,9 @@ describe('User Deletion', () => {
 
     beforeEach(async () => {
         const testUser = await User.create({
-            Username: 'testuser',
-            Email: 'test@example.com',
-            Password: 'testpassword',
+            Username: USER_TEST_USERNAME,
+            Email: USER_TEST_EMAIL,
+            Password: USER_TEST_PASS,
         });
         userIdToDelete = testUser._id;
     });
