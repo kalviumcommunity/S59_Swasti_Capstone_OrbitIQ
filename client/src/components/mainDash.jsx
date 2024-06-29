@@ -32,6 +32,7 @@ function mainDash({username}) {
         </div>
         <CardContainer />
         <Link to="/generative-ai"><div className="ai-bot"><img src={LunaAI} alt="Luna AI"/></div></Link>
+        <Link to="/create-notes"><div>create</div></Link>
       </div>
   )
 }

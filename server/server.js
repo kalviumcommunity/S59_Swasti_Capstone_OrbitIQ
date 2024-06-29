@@ -13,6 +13,7 @@ const lu_routes = require('./src/Routes/learningUnits.routes')
 const user_routes = require('./src/Routes/authentification.routes');
 const fileUploaded = require('./src/Routes/fileUpload')
 const Langchain =require("./src/Routes/Langchain.routes");
+const ChatCompletion =require("./src/Routes/chatCompletion.routes");
 const { connectToDB } = require("./db");
 const scheduleAPODEmails=require('./src/utils/scheduleCronjob')
 
@@ -44,6 +45,7 @@ app.use('/user', user_routes);
 app.use('/upload', fileUploaded);
 app.use('/learning', lu_routes);
 app.use('/genai',Langchain);
+app.use('/chat-autocomplete',ChatCompletion)
 scheduleAPODEmails();
 
 
