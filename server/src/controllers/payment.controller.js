@@ -6,6 +6,9 @@ const createOrder = async (req, res) => {
     const { amount } = req.body;
 
     try {
+        if (!amount || typeof amount !== 'number' || amount <= 0) {
+            return res.status(400).json({ error: 'Invalid amount provided' });
+        }
         const instance = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_SECRET,
@@ -23,7 +26,8 @@ const createOrder = async (req, res) => {
 
         res.json(order);
     } catch (error) {
-        res.status(500).send(error);
+        console.error('Error creating payment order:', error);
+        res.status(500).json({ error: 'Failed to create payment order' });
     }
 };
 
