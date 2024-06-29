@@ -79,6 +79,9 @@ export default function Landing() {
                   <p>SIGN IN</p>
                 </Link></>)
             }
+            <Link to="/donate">
+              <i className='bx bxs-donate-heart' style={{ color: '#7effcb', fontSize: '40px' }} title="Donate"></i>
+            </Link>
           </div>
           <div className="parent-div-text"></div>
           <div className="text-over-subparent">

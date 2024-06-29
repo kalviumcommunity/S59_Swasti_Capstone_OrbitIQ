@@ -12,6 +12,7 @@ const user_routes = require('./src/Routes/authentification.routes');
 const fileUploaded = require('./src/Routes/fileUpload');
 const Langchain = require('./src/Routes/Langchain.routes');
 const ChatCompletion = require('./src/Routes/chatCompletion.routes');
+const PaymentRoutes = require("./src/Routes/payement.routes");
 const scheduleAPODEmails = require('./src/utils/scheduleCronjob');
 
 const app = express();
@@ -22,16 +23,16 @@ app.set('views', path.join(__dirname + '/src', 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  credentials: true,
-  origin: process.env.CORS_ORIGIN_PROD 
+    credentials: true,
+    origin: process.env.CORS_ORIGIN_PROD
 }));
 app.use(cookieparser());
 
@@ -41,6 +42,7 @@ app.use('/upload', fileUploaded);
 app.use('/learning', lu_routes);
 app.use('/genai', Langchain);
 app.use('/chat-autocomplete', ChatCompletion);
+app.use('/payment', PaymentRoutes);
 
 scheduleAPODEmails();
 

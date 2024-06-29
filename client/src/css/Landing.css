@@ -88,6 +88,9 @@
 }
 
 .nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   display: flex;
   gap: 3vw;
@@ -189,4 +192,8 @@
 
 .ai-bot img {
   height: 80px;
+}
+
+.bx.bxs-donate-heart:hover {
+  transform: scale(1.2);
 }

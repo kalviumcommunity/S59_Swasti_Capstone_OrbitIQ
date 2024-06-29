@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import GoogleLoader from "./components/GoogleLoader";
 import ChatBotUI from "./pages/ChatBotUI";
 import Notes from "./components/Notes";
+import DonationPage from "./pages/Donation";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -26,11 +27,12 @@ const App = () => {
         <Route path="/" element={loading ? <Loader /> : <Landing />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard/*" element={<Dashboard/>}/>
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/google/success" element={<GoogleLoader/>}/>
-        <Route path="/generative-ai" element={<ChatBotUI/>}/>
-        <Route path ="/create-notes" element ={<Notes/>}/>
+        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/google/success" element={<GoogleLoader />} />
+        <Route path="/generative-ai" element={<ChatBotUI />} />
+        <Route path="/create-notes" element={<Notes />} />
+        <Route path="/donate" element={<DonationPage />} />
       </Routes>
     </>
   );
