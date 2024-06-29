@@ -9,6 +9,7 @@ import "./App.css";
 import Profile from "./pages/Profile";
 import GoogleLoader from "./components/GoogleLoader";
 import ChatBotUI from "./pages/ChatBotUI";
+import Notes from "./components/Notes";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/google/success" element={<GoogleLoader/>}/>
         <Route path="/generative-ai" element={<ChatBotUI/>}/>
+        <Route path ="/create-notes" element ={<Notes/>}/>
       </Routes>
     </>
   );
