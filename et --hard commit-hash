@@ -1,0 +1,72 @@
+[33m808cab4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mDocker[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{0}: pull origin main: Fast-forward
+[33m2f55f86[m[33m ([m[1;31morigin/Docker[m[33m)[m HEAD@{1}: checkout: moving from main to Docker
+[33m808cab4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mDocker[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{2}: pull: Fast-forward
+[33m2ae6830[m HEAD@{3}: checkout: moving from Docker to main
+[33m2f55f86[m[33m ([m[1;31morigin/Docker[m[33m)[m HEAD@{4}: commit: Implemented a Dockerfile support in application
+[33m7ead16a[m[33m ([m[1;31morigin/JEST_Testing[m[33m, [m[1;32mJEST_Testing[m[33m)[m HEAD@{5}: checkout: moving from JEST_Testing to Docker
+[33m7ead16a[m[33m ([m[1;31morigin/JEST_Testing[m[33m, [m[1;32mJEST_Testing[m[33m)[m HEAD@{6}: checkout: moving from JEST to JEST_Testing
+[33m5c36ebd[m[33m ([m[1;31morigin/Payment[m[33m, [m[1;32mPayment[m[33m, [m[1;32mJEST[m[33m)[m HEAD@{7}: checkout: moving from Payment to JEST
+[33m5c36ebd[m[33m ([m[1;31morigin/Payment[m[33m, [m[1;32mPayment[m[33m, [m[1;32mJEST[m[33m)[m HEAD@{8}: commit (merge): changes made
+[33m9ec8872[m HEAD@{9}: reset: moving to HEAD
+[33m9ec8872[m HEAD@{10}: commit: changes added according to AI-review
+[33m6de1ccb[m HEAD@{11}: commit: RazorPay:Payment gateway integration added
+[33m7ead16a[m[33m ([m[1;31morigin/JEST_Testing[m[33m, [m[1;32mJEST_Testing[m[33m)[m HEAD@{12}: checkout: moving from JEST_Testing to Payment
+[33m7ead16a[m[33m ([m[1;31morigin/JEST_Testing[m[33m, [m[1;32mJEST_Testing[m[33m)[m HEAD@{13}: reset: moving to HEAD
+[33m7ead16a[m[33m ([m[1;31morigin/JEST_Testing[m[33m, [m[1;32mJEST_Testing[m[33m)[m HEAD@{14}: commit: changes done according to AI-review
+[33md57fc18[m HEAD@{15}: commit: Used a testing framework JEST in application
+[33me244082[m[33m ([m[1;31morigin/LLM/autocomplete[m[33m, [m[1;32mLLM/autocomplete[m[33m)[m HEAD@{16}: checkout: moving from LLM/autocomplete to JEST_Testing
+[33me244082[m[33m ([m[1;31morigin/LLM/autocomplete[m[33m, [m[1;32mLLM/autocomplete[m[33m)[m HEAD@{17}: commit: changes done according to AI-review
+[33m109e427[m HEAD@{18}: commit: Autocomplete functionality added
+[33m2ae6830[m HEAD@{19}: checkout: moving from main to LLM/autocomplete
+[33m2ae6830[m HEAD@{20}: pull: Fast-forward
+[33mf1a4a5b[m HEAD@{21}: pull: Fast-forward
+[33m7a9e763[m HEAD@{22}: checkout: moving from Langchain to main
+[33m83376c3[m[33m ([m[1;31morigin/Langchain[m[33m, [m[1;32mLangchain[m[33m)[m HEAD@{23}: commit: Added LunaAI component
+[33m7a9e763[m HEAD@{24}: pull origin main: Fast-forward
+[33m5a5306e[m HEAD@{25}: checkout: moving from main to Langchain
+[33m7a9e763[m HEAD@{26}: checkout: moving from Cronjobs to main
+[33m5ac6a89[m[33m ([m[1;31morigin/Cronjobs[m[33m, [m[1;32mCronjobs[m[33m)[m HEAD@{27}: checkout: moving from Ratelimiting to Cronjobs
+[33m7d034c6[m[33m ([m[1;31morigin/RateLimiting[m[33m, [m[1;32mRateLimiting[m[33m)[m HEAD@{28}: checkout: moving from Redis_cache to Ratelimiting
+[33mc89a2aa[m[33m ([m[1;31morigin/Redis_Cache[m[33m, [m[1;32mRedis_Cache[m[33m)[m HEAD@{29}: checkout: moving from Langchain to Redis_cache
+[33m5a5306e[m HEAD@{30}: checkout: moving from main to Langchain
+[33m7a9e763[m HEAD@{31}: pull: Fast-forward
+[33m096b741[m HEAD@{32}: checkout: moving from Langchain to main
+[33m5a5306e[m HEAD@{33}: commit: chnages made according to AI-review
+[33m3aff260[m HEAD@{34}: commit: Implemented LangChain for AI chat section
+[33mc89a2aa[m[33m ([m[1;31morigin/Redis_Cache[m[33m, [m[1;32mRedis_Cache[m[33m)[m HEAD@{35}: checkout: moving from Redis_Cache to Langchain
+[33mc89a2aa[m[33m ([m[1;31morigin/Redis_Cache[m[33m, [m[1;32mRedis_Cache[m[33m)[m HEAD@{36}: commit: changes done according to AI-review
+[33m4047393[m HEAD@{37}: commit: Redis cache used to store patched profile image
+[33m7d034c6[m[33m ([m[1;31morigin/RateLimiting[m[33m, [m[1;32mRateLimiting[m[33m)[m HEAD@{38}: checkout: moving from RateLimiting to Redis_Cache
+[33m7d034c6[m[33m ([m[1;31morigin/RateLimiting[m[33m, [m[1;32mRateLimiting[m[33m)[m HEAD@{39}: commit: changes made according to AI-review
+[33m5dbc4b0[m HEAD@{40}: commit: rate limiting added in profile
+[33m5ac6a89[m[33m ([m[1;31morigin/Cronjobs[m[33m, [m[1;32mCronjobs[m[33m)[m HEAD@{41}: Branch: renamed refs/heads/Ratelimiting_Redis to refs/heads/RateLimiting
+[33m5ac6a89[m[33m ([m[1;31morigin/Cronjobs[m[33m, [m[1;32mCronjobs[m[33m)[m HEAD@{43}: Branch: renamed refs/heads/RateLimiting to refs/heads/Ratelimiting_Redis
+[33m5ac6a89[m[33m ([m[1;31morigin/Cronjobs[m[33m, [m[1;32mCronjobs[m[33m)[m HEAD@{45}: checkout: moving from Cronjobs to RateLimiting
+[33m5ac6a89[m[33m ([m[1;31morigin/Cronjobs[m[33m, [m[1;32mCronjobs[m[33m)[m HEAD@{46}: commit: changes made according to AI-review
+[33m9c19327[m HEAD@{47}: commit: scheduled mails using node-cron
+[33m5a9d8bc[m[33m ([m[1;31morigin/OTP_SSR[m[33m, [m[1;32mOTP_SSR[m[33m)[m HEAD@{48}: checkout: moving from OTP_SSR to Cronjobs
+[33m5a9d8bc[m[33m ([m[1;31morigin/OTP_SSR[m[33m, [m[1;32mOTP_SSR[m[33m)[m HEAD@{49}: checkout: moving from Update_delete to OTP_SSR
+[33mf56f638[m[33m ([m[1;31morigin/Update_delete[m[33m, [m[1;32mUpdate_delete[m[33m)[m HEAD@{50}: checkout: moving from OTP_SSR to Update_delete
+[33m5a9d8bc[m[33m ([m[1;31morigin/OTP_SSR[m[33m, [m[1;32mOTP_SSR[m[33m)[m HEAD@{51}: commit: changes made according to AI-review
+[33ma52ac13[m HEAD@{52}: commit: OTP verification and server side rerendering
+[33mf56f638[m[33m ([m[1;31morigin/Update_delete[m[33m, [m[1;32mUpdate_delete[m[33m)[m HEAD@{53}: checkout: moving from Update_delete to OTP_SSR
+[33mf56f638[m[33m ([m[1;31morigin/Update_delete[m[33m, [m[1;32mUpdate_delete[m[33m)[m HEAD@{54}: commit: console.log removed according to the AI-review
+[33m875bd3b[m HEAD@{55}: commit: Implementing 'update' and 'delete' an entity in React app
+[33m6dd81d2[m[33m ([m[1;31morigin/API-testing[m[33m, [m[1;32mAPI-testing[m[33m)[m HEAD@{56}: checkout: moving from API-testing to Update_delete
+[33m6dd81d2[m[33m ([m[1;31morigin/API-testing[m[33m, [m[1;32mAPI-testing[m[33m)[m HEAD@{57}: commit (merge): all end points added
+[33m8d9a483[m HEAD@{58}: commit (merge): all endpoints tested
+[33m7576d94[m HEAD@{59}: commit: GET-API-TESTING
+[33m8ee9caa[m[33m ([m[1;31morigin/JWT-added[m[33m, [m[1;32mJWT-added[m[33m)[m HEAD@{60}: checkout: moving from JWT-added to API-testing
+[33m8ee9caa[m[33m ([m[1;31morigin/JWT-added[m[33m, [m[1;32mJWT-added[m[33m)[m HEAD@{61}: checkout: moving from DB-operations to JWT-added
+[33m7a74bec[m[33m ([m[1;31morigin/DB-operations[m[33m, [m[1;32mDB-operations[m[33m)[m HEAD@{62}: commit: Formatted the code
+[33ma8c53f5[m HEAD@{63}: commit: Action performed on AI-review
+[33m8ec5deb[m HEAD@{64}: commit: Database read and write performed
+[33md66c359[m[33m ([m[1;31morigin/bcrypt-added[m[33m, [m[1;32mbcrypt-added[m[33m)[m HEAD@{65}: checkout: moving from bcrypt-added to DB-operations
+[33md66c359[m[33m ([m[1;31morigin/bcrypt-added[m[33m, [m[1;32mbcrypt-added[m[33m)[m HEAD@{66}: commit: action taken on AI-review
+[33ma4198fa[m HEAD@{67}: commit: password hashed
+[33m4e37d2d[m HEAD@{68}: commit: hashing of password done
+[33m8ee9caa[m[33m ([m[1;31morigin/JWT-added[m[33m, [m[1;32mJWT-added[m[33m)[m HEAD@{69}: checkout: moving from JWT-added to bcrypt-added
+[33m8ee9caa[m[33m ([m[1;31morigin/JWT-added[m[33m, [m[1;32mJWT-added[m[33m)[m HEAD@{70}: commit: JWT-added changes made according to AI-review
+[33m56e0b19[m HEAD@{71}: commit: JWT-added in cookie
+[33m81ce3a7[m HEAD@{72}: commit: jsonwebtoken package installed
+[33mccef6d8[m[33m ([m[1;31morigin/Relational-Entities[m[33m, [m[1;32mRelational-Entities[m[
