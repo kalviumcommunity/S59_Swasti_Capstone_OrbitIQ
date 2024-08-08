@@ -30,16 +30,14 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://orbitiq.netlify.app'
-];
+const corsOptions = {
+  origin: "https://orbitiq.netlify.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
 app.use(
-  cors({
-    credentials: true,
-    origin: "https://orbitiq.netlify.app",
-  })
+  cors(corsOptions)
 );
 app.use(cookieparser());
 
