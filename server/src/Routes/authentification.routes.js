@@ -79,7 +79,8 @@ router.get('/google/login/success', async (req, res) => {
     let token;
     try {
       token = jwt.sign({ Username, Image, Email, UserId }, JWT_SECRET, { expiresIn: '12h' })
-      res.cookie('token', token, { httpOnly: false, secure: true, sameSite: 'Lax', maxAge: 12 * 60 * 60 * 1000 });
+      // res.cookie('token', token, { httpOnly: false, secure: true, sameSite: 'Lax', maxAge: 12 * 60 * 60 * 1000 });
+      res.json({token:token});
     } catch (err) {
       return res.status(500).json({ message: "Token generation failed", error: err.message });
     }
@@ -241,7 +242,7 @@ router.post("/login", async (req, res) => {
     }
     const { Username, Image } = user;
     const token = jwt.sign({ Username, Image, Email, UserId: user._id }, JWT_SECRET, { expiresIn: '12h' })
-    res.cookie('token', token, { httpOnly: false, secure: true, sameSite: 'Lax', maxAge: 12 * 60 * 60 * 1000 });
+    // res.cookie('token', token, { httpOnly: false, secure: true, sameSite: 'Lax', maxAge: 12 * 60 * 60 * 1000 });
     res.status(200).json({ message: "Login successful", Username: Username, Image: Image, Email: Email, UserId: user._id, token: token });
 
   } catch (error) {
@@ -250,7 +251,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.clearCookie('token', { httpOnly: false, secure: true, sameSite: 'Lax' });
+  // res.clearCookie('token', { httpOnly: false, secure: true, sameSite: 'Lax' });
   res.status(200).json({ message: "Logout successful" });
 });
 

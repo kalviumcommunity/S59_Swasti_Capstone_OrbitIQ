@@ -52,6 +52,7 @@ export default function SideNav({ username, userId, email, GoogleImage }) {
       });
       if (response.ok) {
         console.log("Logout successful");
+        document.cookie ="token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=Lax";
         setTimeout(() => {
           navigate("/");
         }, 1000);

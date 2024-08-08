@@ -47,7 +47,10 @@ function Login() {
       });
 
       if (response.ok) {
-        const { message } = await response.json();
+        const { message ,token} = await response.json();
+        document.cookie = `token=${token}; path=/ ;max-age=${
+          12 * 60 * 60
+        };secure;samesite=Lax`;
         toast.success(message);
         setTimeout(() => {
           navigate("/dashboard");

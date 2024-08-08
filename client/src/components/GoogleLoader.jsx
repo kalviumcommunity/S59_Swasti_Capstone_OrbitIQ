@@ -15,7 +15,8 @@ function GoogleLoader() {
                     credentials: 'include'
                 });
                 if (response.ok) {
-                    const resp = await response.json();
+                    const {token} = await response.json();
+                    document.cookie=`token=${token}; path=/ ;max-age=${12*60*60};secure;samesite=Lax`;
                 } else {
                     console.error('Failed to fetch google user data');
                 }

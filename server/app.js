@@ -35,16 +35,12 @@ const allowedOrigins = [
     'https://orbitiq.netlify.app'
 ];
 
-app.use(cors({
+app.use(
+  cors({
     credentials: true,
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
+    origin: "https://orbitiq.netlify.app",
+  })
+);
 app.use(cookieparser());
 
 app.use('/data', routes);
